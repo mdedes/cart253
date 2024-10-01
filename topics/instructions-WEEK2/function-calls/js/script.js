@@ -2,7 +2,7 @@
  * The Blank Page
  * Mary Dedes
  * 
- * An exploration of teh existential angst of a novelsit confronting 
+ * An exploration of the existential angst of a novelist confronting 
  * the blank page while under huge pressure from their publisher.
  * The program is non-interactive intentionally in order to simulate
  * the writer's inability to get started on the project.
