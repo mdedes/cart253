@@ -1,12 +1,12 @@
-# Template p5 Project
+# Crystal Ball
 
-Author Name
+Mary Dedes
 
 [View this project online](URL_FOR_THE_RUNNING_PROJECT)
 
 ## Description
 
-This description should help the reader understand what the program is, what any controls do, and perhaps what the desired experience it.
+Behold! A magical crystal ball that will reveal your fortune with a wave of your hand (a click of your mouse)! Or will it? I dunno, I'm kinda new to this. Pretty sure I ordered a crystal ball... Anyway, just wave your hand (mouse) around the mall to power it up, then tap (click) on it to (hopefully) conjure up your fortune!
 
 ## Credits
 
