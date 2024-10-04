@@ -14,7 +14,7 @@
 */
 
 function setup() {
-    createCanvas(700, 700);
+    createCanvas(700, 800);
 }
 
 /**
@@ -38,7 +38,7 @@ function draw() {
     fill(r, 0, b);
 
     // Draw the ball.
-    circle(350, 305, 250);
+    circle(350, 355, 250);
 
     // Draw the left "leg" of the ball.
     noStroke()
@@ -47,9 +47,9 @@ function draw() {
 
     beginShape();
 
-    vertex(235, 445);
+    vertex(235, 495);
 
-    bezierVertex(340, 355, 250, 345, 235, 445);
+    bezierVertex(340, 405, 250, 395, 235, 495);
 
     endShape();
 
@@ -61,9 +61,9 @@ function draw() {
 
     beginShape();
 
-    vertex(465, 445)
+    vertex(465, 495)
 
-    bezierVertex(360, 355, 445, 345, 465, 445);
+    bezierVertex(360, 405, 445, 395, 465, 495);
 
     endShape();
 
