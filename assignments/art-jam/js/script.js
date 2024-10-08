@@ -41,7 +41,7 @@ function draw() {
     circle(350, 355, 250);
 
     // Draw the left "leg" of the ball.
-    noStroke()
+    noStroke();
 
     fill(200, 150, 50);
 
