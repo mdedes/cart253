@@ -24,15 +24,15 @@ const crystalBall = {
  * and setting up our fortune probabilities.
 */
 
-let img
+let handImage = undefined;
 
 function preload() {
-    img = loadImage('');
+    handImage = loadImage('assets/images/ladyhand Small.jpeg');
 }
 
 function setup() {
     createCanvas(700, 800);
-    imageMode(CENTER);
+    image(img, mouseX, mouseY)
     NoCursor();
 }
 
@@ -42,7 +42,6 @@ function setup() {
 */
 function draw() {
     drawRoom();
-    image(img, mouseX, mouseY)
     drawCrystalBall();
     checkInput();
 }
