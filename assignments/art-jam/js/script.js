@@ -51,7 +51,7 @@ function setup() {
     }
     // Between 0.61 and 1.0 means this one is 39% of the time
     else {
-        drop = "I don't wanna."
+        drop = "Get lost, chump."
     }
 }
 
@@ -120,8 +120,8 @@ function drawLeftFrontLeg() {
     noStroke();
     fill(200, 150, 50);
     beginShape();
-    vertex(235, 495);
-    bezierVertex(340, 405, 250, 395, 235, 495);
+    vertex(225, 535);
+    bezierVertex(330, 445, 240, 435, 225, 535);
     endShape();
     pop();
 }
@@ -134,8 +134,8 @@ function drawRightFrontLeg() {
     noStroke();
     fill(200, 150, 50);
     beginShape();
-    vertex(465, 495)
-    bezierVertex(360, 405, 445, 395, 465, 495);
+    vertex(475, 535)
+    bezierVertex(370, 445, 455, 435, 475, 535);
     endShape();
     pop();
 }
