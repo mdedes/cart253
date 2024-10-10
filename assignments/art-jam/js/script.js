@@ -17,6 +17,7 @@ const crystalBall = {
     y: 335,
     // Size
     size: 320,
+    fill: '#463eb8'
 }
 
 /**
@@ -40,12 +41,13 @@ function setup() {
 /**
  * Creates the mystical ambiance with a dark background 
  * and draws the magical crystal ball so it really stands out.
+ * We also have a hand now so we can *touch* the bal!!
 */
 function draw() {
     drawRoom();
-    checkInput();
     drawCrystalBall();
     drawHand();
+    checkInput();
 }
 
 /**
@@ -56,93 +58,29 @@ function drawRoom() {
 }
 
 /**
+ * Draws our mystical, magical crystal ball set.
+ */
+function drawCrystalBall() {
+    drawBall();
+    drawFortune()
+    drawLeftFrontLeg();
+    drawRightFrontLeg();
+}
+
+/**
  * Draws the hand cursor so we can rub the Crystal Ball!
  */
 function drawHand() {
     image(handImage, mouseX, mouseY)
 }
 
-/**
- * Draws our mystical, magical crystal ball set.
- */
-function drawCrystalBall() {
-    drawBall();
-    drawLeftFrontLeg();
-    drawRightFrontLeg();
-}
-
-function checkInput() {
-    const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
-    const mouseOverlapsCrystalBall = (distance < crystalBall.size / 2);
-
-    const mouseIsMoving = undefined;
-
-    if (mouseOverlapsCrystalBall) {
-        const x = crystalBall.x + random(-50, 50);
-        const y = crystalBall.y + random(-50, 50);
-    }
-}
-
-// Defining r and b (rgb) variables for our ball.
-var r = 0;
-var b = 650;
-
-/**
- * Draws our mesmerizing ball only 
- * (in front of which fortune is displayed).
- */
-function drawBall() {
-
-    push();
-    // When you move the mouse around the ball,
-    // the ball's colour changes, *ooOoooUuU*.
-    let r = map(mouseX, 0, 700, 0, 700);
-    let b = map(mouseX, 0, 700, 700, 0);
-
-    // Style the ball.
-    fill(r, 0, b);
-
-    // Draw the ball.
-    circle(350, 355, 320);
-    pop();
-}
-
-/**
- * Draws the golden claw-like left front "leg" that supports our ball.
- */
-function drawLeftFrontLeg() {
-    push();
-    noStroke();
-    fill(200, 150, 50);
-    beginShape();
-    vertex(225, 535);
-    bezierVertex(330, 445, 240, 435, 225, 535);
-    endShape();
-    pop();
-}
-
-/**
- * Draws the golden claw-like left front "leg" that supports our ball.
- */
-function drawRightFrontLeg() {
-    push();
-    noStroke();
-    fill(200, 150, 50);
-    beginShape();
-    vertex(475, 535)
-    bezierVertex(370, 445, 455, 435, 475, 535);
-    endShape();
-    pop();
-}
-
 // We will put our random fortune in here.
 let fortune = undefined;
+// Getting a random number to set up 
+// the probability for our fortunes.
+const p = random();
 
-function mouseClicked() {
-
-    // Getting a random number to set up 
-    // the probability for our fortunes.
-    const p = random();
+function mouseClick() {
 
     // Choosing different loot at different
     // probabilities. This part of the code was
@@ -173,6 +111,79 @@ function mouseClicked() {
     else {
         fortune = "Get lost, chump."
     }
+}
+
+/**
+ * Makes the ball shake when you hover your hand on it and rub it!
+ */
+function checkInput() {
+    const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
+    const mouseOverlapsCrystalBall = (distance < crystalBall.size / 2);
+
+    const mouseIsMoving = undefined;
+
+    if (mouseOverlapsCrystalBall) {
+        const x = crystalBall.x + random(-50, 50);
+        const y = crystalBall.y + random(-50, 50);
+    }
+}
+
+// Defining r and b (rgb) variables for our ball.
+var r = 0;
+var b = 650;
+
+/**
+ * Draws our mesmerizing ball only 
+ * (in front of which fortune is displayed).
+ */
+function drawBall() {
+
+    //push();
+    // When you move the mouse around the ball,
+    // the ball's colour changes, *ooOoooUuU*.
+    let r = map(mouseX, 0, 700, 0, 700);
+    let b = map(mouseX, 0, 700, 700, 0);
+
+    // Style the ball.
+    fill(r, 0, b);
+
+    // Draw the ball.
+    circle(350, 355, 320);
+    // pop();
+}
+
+/**
+ * Draws the golden claw-like left front "leg" that supports our ball.
+ */
+function drawLeftFrontLeg() {
+    push();
+    noStroke();
+    fill(200, 150, 50);
+    beginShape();
+    vertex(225, 535);
+    bezierVertex(330, 445, 240, 435, 225, 535);
+    endShape();
+    pop();
+}
+
+/**
+ * Draws the golden claw-like left front "leg" that supports our ball.
+ */
+function drawRightFrontLeg() {
+    push();
+    noStroke();
+    fill(200, 150, 50);
+    beginShape();
+    vertex(475, 535)
+    bezierVertex(370, 445, 455, 435, 475, 535);
+    endShape();
+    pop();
+}
+
+/**
+ * Displays our shocking fortunes!
+ */
+function drawFortune() {
     // Display the fortune in front of ball.
     push();
     textAlign(CENTER, CENTER);
@@ -182,4 +193,3 @@ function mouseClicked() {
     text(fortune, 350, 355);
     pop();
 }
-
