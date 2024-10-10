@@ -10,16 +10,50 @@
 
 "use strict";
 
+// We will put our random fortune in here.
+let drop = undefined;
+
 /**
- * Creating a 700x800 canvas to set up the scene.
+ * Creating a 700x800 canvas to set up the scene 
+ * and setting up our fortune probabilities.
 */
 function setup() {
     createCanvas(700, 800);
-}
 
-// Defining r and b (rgb) variables
-var r = 0;
-var b = 650;
+    // Getting a random number to set up 
+    // the probability for our fortunes.
+    const p = random();
+
+    // Choosing different loot at different
+    // probabilities. This part of the code was
+    // borrowed from Pippin's "random() and
+    // probability" example.
+
+    // 1% of the time!
+    if (p < 0.01) {
+        drop = "A gnome will give you stock tips.";
+    }
+    // Between 0.01 and 0.11 means this one is 10% of the time
+    else if (p < 0.11) {
+        drop = "Your next pet will be a wisecracking cactus.";
+    }
+    // Between 0.11 and 0.26 means this one is 15% of the time
+    else if (p < 0.26) {
+        drop = "You will lose your left sock. Eventually."
+    }
+    // Between 0.26 and 0.31 means this one is 5% of the time
+    else if (p < 0.31) {
+        drop = "A llama will offer you life advice, but only in riddles."
+    }
+    // Between 0.31 and 0.61 means this one is 30% of the time
+    else if (p < 0.61) {
+        drop = "You may or may not be tempted to eat a tire."
+    }
+    // Between 0.61 and 1.0 means this one is 39% of the time
+    else {
+        drop = "I don't wanna."
+    }
+}
 
 /**
  * Creates the mystical ambiance with a dark background 
@@ -46,8 +80,13 @@ function drawCrystalBall() {
     drawRightFrontLeg();
 }
 
+// Defining r and b (rgb) variables for our ball.
+var r = 0;
+var b = 650;
+
 /**
- * Draws our mesmerizing ball only.
+ * Draws our mesmerizing ball only 
+ * (in front of which fortune is displayed).
  */
 function drawBall() {
     push();
@@ -60,7 +99,16 @@ function drawBall() {
     fill(r, 0, b);
 
     // Draw the ball.
-    circle(350, 355, 250);
+    circle(350, 355, 320);
+    pop();
+
+    // Display the fortune in front of ball.
+    push();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(13);
+    fill('white')
+    text(drop, 350, 355);
     pop();
 }
 
@@ -91,3 +139,4 @@ function drawRightFrontLeg() {
     endShape();
     pop();
 }
+
