@@ -21,14 +21,16 @@ const crystalBall = {
 }
 
 /**
- * Creating a 700x800 canvas to set up the scene 
- * and setting up our hand cursor.
+ * Creating a 700x800 canvas to set up the scene, 
+ * setting up our hand cursor, and the background image.
 */
 
+let curtainImage = undefined;
 let handImage = undefined;
 
-// Loading our image into the program.
+// Loading our hand and curtain image into the program.
 function preload() {
+    curtainImage = loadImage('assets/images/redcurtains.png');
     handImage = loadImage('assets/images/ladyhand.png');
 }
 
@@ -38,8 +40,6 @@ function setup() {
     noCursor();
 }
 
-
-
 /**
  * Creates the mystical ambiance with a dark background 
  * and draws the magical crystal ball so it really stands out.
@@ -47,9 +47,9 @@ function setup() {
 */
 function draw() {
     drawRoom();
+    checkInput();
     drawCrystalBall();
     drawHand();
-    checkInput();
 }
 
 /**
@@ -57,6 +57,8 @@ function draw() {
  */
 function drawRoom() {
     background(20, 20, 40);
+    curtainImage.resize(width, height);
+    image(curtainImage, 0, 0)
 }
 
 /**
@@ -78,8 +80,9 @@ function drawHand() {
 
 // We will put our random fortune in here.
 let fortune = undefined;
+let fortuneRead = false
 
-function mouseClick() {
+function mouseClicked() {
     // Getting a random number to set up 
     // the probability for our fortunes.
     const p = random();
@@ -112,6 +115,7 @@ function mouseClick() {
     else {
         fortune = "Get lost, chump."
     }
+    let fortuneRead = true;
 }
 
 /**
