@@ -6,7 +6,7 @@ Mary Dedes
 
 ## Description
 
-Behold! A magical crystal ball that will reveal your fortune with a wave of your hand (a click of your mouse)! Or will it? I dunno, I'm kinda new to this. Pretty sure I ordered a crystal ball... Anyway, just wave your hand (mouse) around the mall to power it up, then tap (click) on it to (hopefully) conjure up your fortune!
+Behold! A magical crystal ball that will reveal your fortune with a wave of your hand (a click of your mouse)! Or will it? I dunno, I'm kinda new to this. Pretty sure I ordered a crystal ball... Anyway, just wave your hand (mouse) around the ball to power it up, then tap (click) on it to (hopefully) conjure up your fortune!
 
 ## Credits
 
