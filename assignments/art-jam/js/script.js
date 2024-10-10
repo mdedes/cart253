@@ -38,6 +38,8 @@ function setup() {
     noCursor();
 }
 
+
+
 /**
  * Creates the mystical ambiance with a dark background 
  * and draws the magical crystal ball so it really stands out.
@@ -76,12 +78,11 @@ function drawHand() {
 
 // We will put our random fortune in here.
 let fortune = undefined;
-// Getting a random number to set up 
-// the probability for our fortunes.
-const p = random();
 
 function mouseClick() {
-
+    // Getting a random number to set up 
+    // the probability for our fortunes.
+    const p = random();
     // Choosing different loot at different
     // probabilities. This part of the code was
     // borrowed from Pippin's "random() and
