@@ -27,13 +27,12 @@ const crystalBall = {
 let handImage = undefined;
 
 function preload() {
-    handImage = loadImage('assets/images/ladyhand Small.jpeg');
+    handImage = loadImage('assets/images/ladyhand.jpeg');
 }
 
 function setup() {
     createCanvas(700, 800);
-    image(img, mouseX, mouseY)
-    NoCursor();
+    noCursor();
 }
 
 /**
@@ -42,6 +41,7 @@ function setup() {
 */
 function draw() {
     drawRoom();
+    image(handImage, mouseX, mouseY)
     drawCrystalBall();
     checkInput();
 }
