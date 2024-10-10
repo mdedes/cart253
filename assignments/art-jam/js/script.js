@@ -21,17 +21,19 @@ const crystalBall = {
 
 /**
  * Creating a 700x800 canvas to set up the scene 
- * and setting up our fortune probabilities.
+ * and setting up our hand cursor.
 */
 
 let handImage = undefined;
 
+// Loading our image into the program.
 function preload() {
-    handImage = loadImage('assets/images/ladyhand.jpeg');
+    handImage = loadImage('assets/images/ladyhand.png');
 }
 
 function setup() {
     createCanvas(700, 800);
+    // Removing cursor from sight so we only see hand image.
     noCursor();
 }
 
@@ -41,9 +43,9 @@ function setup() {
 */
 function draw() {
     drawRoom();
-    image(handImage, mouseX, mouseY)
-    drawCrystalBall();
     checkInput();
+    drawCrystalBall();
+    drawHand();
 }
 
 /**
@@ -51,6 +53,13 @@ function draw() {
  */
 function drawRoom() {
     background(20, 20, 40);
+}
+
+/**
+ * Draws the hand cursor so we can rub the Crystal Ball!
+ */
+function drawHand() {
+    image(handImage, mouseX, mouseY)
 }
 
 /**
