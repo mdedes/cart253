@@ -23,8 +23,17 @@ const crystalBall = {
  * Creating a 700x800 canvas to set up the scene 
  * and setting up our fortune probabilities.
 */
+
+let img
+
+function preload() {
+    img = loadImage('');
+}
+
 function setup() {
     createCanvas(700, 800);
+    imageMode(CENTER);
+    NoCursor();
 }
 
 /**
@@ -33,6 +42,7 @@ function setup() {
 */
 function draw() {
     drawRoom();
+    image(img, mouseX, mouseY)
     drawCrystalBall();
     checkInput();
 }
