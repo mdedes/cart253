@@ -10,8 +10,14 @@
 
 "use strict";
 
-// We will put our random fortune in here.
-let drop = undefined;
+// Our ball
+const crystalBall = {
+    //Position
+    x: 350,
+    y: 335,
+    // Size
+    size: 320,
+}
 
 /**
  * Creating a 700x800 canvas to set up the scene 
@@ -19,40 +25,6 @@ let drop = undefined;
 */
 function setup() {
     createCanvas(700, 800);
-
-    // Getting a random number to set up 
-    // the probability for our fortunes.
-    const p = random();
-
-    // Choosing different loot at different
-    // probabilities. This part of the code was
-    // borrowed from Pippin's "random() and
-    // probability" example.
-
-    // 1% of the time!
-    if (p < 0.01) {
-        drop = "A gnome will give you stock tips.";
-    }
-    // Between 0.01 and 0.11 means this one is 10% of the time
-    else if (p < 0.11) {
-        drop = "Your next pet will be a wisecracking cactus.";
-    }
-    // Between 0.11 and 0.26 means this one is 15% of the time
-    else if (p < 0.26) {
-        drop = "You will lose your left sock. Eventually."
-    }
-    // Between 0.26 and 0.31 means this one is 5% of the time
-    else if (p < 0.31) {
-        drop = "A llama will offer you life advice, but only in riddles."
-    }
-    // Between 0.31 and 0.61 means this one is 30% of the time
-    else if (p < 0.61) {
-        drop = "You may or may not be tempted to eat a tire."
-    }
-    // Between 0.61 and 1.0 means this one is 39% of the time
-    else {
-        drop = "Get lost, chump."
-    }
 }
 
 /**
@@ -62,6 +34,7 @@ function setup() {
 function draw() {
     drawRoom();
     drawCrystalBall();
+    checkInput();
 }
 
 /**
@@ -80,6 +53,18 @@ function drawCrystalBall() {
     drawRightFrontLeg();
 }
 
+function checkInput() {
+    const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
+    const mouseOverlapsCrystalBall = (distance < crystalBall.size / 2);
+
+    const mouseIsMoving = undefined;
+
+    if (mouseOverlapsCrystalBall) {
+        const x = crystalBall.x + random(-50, 50);
+        const y = crystalBall.y + random(-50, 50);
+    }
+}
+
 // Defining r and b (rgb) variables for our ball.
 var r = 0;
 var b = 650;
@@ -89,6 +74,7 @@ var b = 650;
  * (in front of which fortune is displayed).
  */
 function drawBall() {
+
     push();
     // When you move the mouse around the ball,
     // the ball's colour changes, *ooOoooUuU*.
@@ -100,15 +86,6 @@ function drawBall() {
 
     // Draw the ball.
     circle(350, 355, 320);
-    pop();
-
-    // Display the fortune in front of ball.
-    push();
-    textAlign(CENTER, CENTER);
-    textStyle(BOLDITALIC);
-    textSize(13);
-    fill('white')
-    text(drop, 350, 355);
     pop();
 }
 
@@ -137,6 +114,54 @@ function drawRightFrontLeg() {
     vertex(475, 535)
     bezierVertex(370, 445, 455, 435, 475, 535);
     endShape();
+    pop();
+}
+
+// We will put our random fortune in here.
+let fortune = undefined;
+
+function mouseClicked() {
+
+    // Getting a random number to set up 
+    // the probability for our fortunes.
+    const p = random();
+
+    // Choosing different loot at different
+    // probabilities. This part of the code was
+    // borrowed from Pippin's "random() and
+    // probability" example.
+
+    // 1% of the time!
+    if (p < 0.01) {
+        fortune = "A gnome will give you stock tips.";
+    }
+    // Between 0.01 and 0.11 means this one is 10% of the time
+    else if (p < 0.11) {
+        fortune = "Your next pet will be a wisecracking cactus.";
+    }
+    // Between 0.11 and 0.26 means this one is 15% of the time
+    else if (p < 0.26) {
+        fortune = "You will lose your left sock. Eventually."
+    }
+    // Between 0.26 and 0.31 means this one is 5% of the time
+    else if (p < 0.31) {
+        fortune = "A llama will offer you life advice, but only in riddles."
+    }
+    // Between 0.31 and 0.61 means this one is 30% of the time
+    else if (p < 0.61) {
+        fortune = "You may or may not be tempted to eat a tire."
+    }
+    // Between 0.61 and 1.0 means this one is 39% of the time
+    else {
+        fortune = "Get lost, chump."
+    }
+    // Display the fortune in front of ball.
+    push();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(13);
+    fill('white')
+    text(fortune, 350, 355);
     pop();
 }
 
