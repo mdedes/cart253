@@ -22,7 +22,7 @@
 
 "use strict";
 
-// Our lovely ball
+// Our lovely ball.
 let crystalBall = {
     //Position
     x: 350,
@@ -34,16 +34,17 @@ let crystalBall = {
 // Setting up our image variables.
 let curtainImage = undefined;
 let handImage = undefined;
+let stoolImage = undefined;
 
-// Loading our hand and curtain image into the program.
+// Loading our hand, curtain and stool images into the program.
 function preload() {
     curtainImage = loadImage('assets/images/redcurtains.png');
     handImage = loadImage('assets/images/ladyhand.png');
+    stoolImage = loadImage('assets/images/stool.png')
 }
 
 /**
- * Creating a 700x800 canvas to set up the scene, 
- * setting up our hand cursor, and the background image.
+ * Creating a 700x800 canvas to set up the scene.
 */
 function setup() {
     createCanvas(700, 800);
@@ -58,6 +59,7 @@ function setup() {
 */
 function draw() {
     drawRoom();
+    drawStool();
     drawCrystalBall();
     drawHand();
 }
@@ -68,8 +70,17 @@ function draw() {
 function drawRoom() {
     // The darkness of the room; no light except that of the ball!
     background(20, 20, 40);
+    // Adding the curtains for extra ambiance...
     curtainImage.resize(width, height);
-    image(curtainImage, 0, 0)
+    image(curtainImage, 0, 0);
+}
+
+/**
+ * Draws our rustic stool upon which rests our future (the ball).
+ */
+function drawStool() {
+    stoolImage.resize(590, 488)
+    image(stoolImage, 55, 443);
 }
 
 /**
@@ -83,7 +94,7 @@ function drawCrystalBall() {
 }
 
 /**
- * Draws the hand cursor so we can rub the Crystal Ball!
+ * Draws our hand so we can rub the Crystal Ball!
  */
 function drawHand() {
     image(handImage, mouseX, mouseY)
@@ -93,8 +104,13 @@ function drawHand() {
 let fortune = undefined;
 let fortuneRead = false;
 
+/**
+ * Time for fortunes to be unveiled! This function helps determine
+ * our fortunes and when they will appear (via a click of the mouse - 
+ * I mean a tap of the hand!).
+ */
 function mouseClicked() {
-    // We will indicate where we want the mouse to be when we click (inside ball)
+    // We will indicate where we want the mouse to be when we click (over ball).
     const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
     const mouseInsideCrystalBall = (distance < crystalBall.size / 2);
 
@@ -102,7 +118,7 @@ function mouseClicked() {
         // Getting a random number to set up 
         // the probability for our fortunes.
         const p = random();
-        // Choosing different loot at different
+        // Choosing different fortunes at different
         // probabilities. This part of the code was
         // borrowed from Pippin's "random() and
         // probability" example.
@@ -136,7 +152,7 @@ function mouseClicked() {
 }
 
 /**
- * Makes the ball shake when you hover your hand on it and rub it! *needs work
+ * Makes the ball shake when you hover your hand on it and rub it! *needs work*
  */
 //function mouseMoved() {
 // We will indicate where we want the to be when we click (inside ball)
