@@ -129,7 +129,7 @@ function mouseClicked() {
         }
         // Between 0.61 and 1.0 means this one is 39% of the time
         else {
-            fortune = "Get lost, chump."
+            fortune = "Get lost, chump. I ain't feelin' it today."
         }
         fortuneRead = true;
     }
