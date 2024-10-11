@@ -11,13 +11,13 @@
 "use strict";
 
 // Our ball
-const crystalBall = {
+let crystalBall = {
     //Position
     x: 350,
     y: 335,
     // Size
     size: 320,
-    fill: '#463eb8'
+    fill: "#463eb8"
 }
 
 /**
@@ -47,7 +47,6 @@ function setup() {
 */
 function draw() {
     drawRoom();
-    checkInput();
     drawCrystalBall();
     drawHand();
 }
@@ -83,45 +82,48 @@ let fortune = undefined;
 let fortuneRead = false
 
 function mouseClicked() {
-    // Getting a random number to set up 
-    // the probability for our fortunes.
-    const p = random();
-    // Choosing different loot at different
-    // probabilities. This part of the code was
-    // borrowed from Pippin's "random() and
-    // probability" example.
+    if (fortuneRead === false) {
+        // Getting a random number to set up 
+        // the probability for our fortunes.
+        const p = random();
+        // Choosing different loot at different
+        // probabilities. This part of the code was
+        // borrowed from Pippin's "random() and
+        // probability" example.
 
-    // 1% of the time!
-    if (p < 0.01) {
-        fortune = "A gnome will give you stock tips.";
+        // 1% of the time!
+        if (p < 0.01) {
+            fortune = "A gnome will give you stock tips.";
+        }
+        // Between 0.01 and 0.11 means this one is 10% of the time
+        else if (p < 0.11) {
+            fortune = "Your next pet will be a wisecracking cactus.";
+        }
+        // Between 0.11 and 0.26 means this one is 15% of the time
+        else if (p < 0.26) {
+            fortune = "You will lose your left sock. Eventually."
+        }
+        // Between 0.26 and 0.31 means this one is 5% of the time
+        else if (p < 0.31) {
+            fortune = "A llama will offer you life advice, but only in riddles."
+        }
+        // Between 0.31 and 0.61 means this one is 30% of the time
+        else if (p < 0.61) {
+            fortune = "You may or may not be tempted to eat a tire."
+        }
+        // Between 0.61 and 1.0 means this one is 39% of the time
+        else {
+            fortune = "Get lost, chump."
+        }
+        fortuneRead = true;
     }
-    // Between 0.01 and 0.11 means this one is 10% of the time
-    else if (p < 0.11) {
-        fortune = "Your next pet will be a wisecracking cactus.";
-    }
-    // Between 0.11 and 0.26 means this one is 15% of the time
-    else if (p < 0.26) {
-        fortune = "You will lose your left sock. Eventually."
-    }
-    // Between 0.26 and 0.31 means this one is 5% of the time
-    else if (p < 0.31) {
-        fortune = "A llama will offer you life advice, but only in riddles."
-    }
-    // Between 0.31 and 0.61 means this one is 30% of the time
-    else if (p < 0.61) {
-        fortune = "You may or may not be tempted to eat a tire."
-    }
-    // Between 0.61 and 1.0 means this one is 39% of the time
-    else {
-        fortune = "Get lost, chump."
-    }
-    let fortuneRead = true;
 }
 
 /**
  * Makes the ball shake when you hover your hand on it and rub it!
  */
 function checkInput() {
+
     const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
     const mouseOverlapsCrystalBall = (distance < crystalBall.size / 2);
 
