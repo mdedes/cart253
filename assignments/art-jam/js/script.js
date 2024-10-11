@@ -2,29 +2,36 @@
  * Crystal Ball
  * Mary Dedes
  * 
- * Behold! A magical crystal ball that will reveal your fortune
- * with a wave of your hand (a click of your mouse)! Or will it?
- * I dunno, I'm kinda new to this. Pretty sure I ordered 
- * a functional crystal ball...
+ * Behold! A magical crystal ball that will reveal your fortune 
+ * with a wave of your hand (a click of your mouse)! Or will it? 
+ * I dunno, I'm kinda new to this. Pretty sure I ordered
+ * a functional crystal ball... Anyway, just wave your 
+ * hand (mouse) around the ball to power it up, 
+ * then tap (click) on it to conjure up your fortune 
+ * (hope that's what it is)!
+ * 
+ * 
+ * PLEASE NOTE* I originally intended to also make the ball 
+ * shake when the mouse hovered over the ball to add to the experience, 
+ * but I got ahead on this a bit too late to troubleshoot 
+ * (code wasn't working). I left the code there to get back to it 
+ * eventually. If I had extra extra time, 
+ * I would've also tried to add a glow when the mouse 
+ * approached the ball for *extra* effect. In time!
  */
 
 "use strict";
 
-// Our ball
+// Our lovely ball
 let crystalBall = {
     //Position
     x: 350,
-    y: 335,
+    y: 355,
     // Size
-    size: 320,
-    fill: "#463eb8"
+    size: 320
 }
 
-/**
- * Creating a 700x800 canvas to set up the scene, 
- * setting up our hand cursor, and the background image.
-*/
-
+// Setting up our image variables.
 let curtainImage = undefined;
 let handImage = undefined;
 
@@ -34,9 +41,13 @@ function preload() {
     handImage = loadImage('assets/images/ladyhand.png');
 }
 
+/**
+ * Creating a 700x800 canvas to set up the scene, 
+ * setting up our hand cursor, and the background image.
+*/
 function setup() {
     createCanvas(700, 800);
-    // Removing cursor from sight so we only see hand image.
+    // Removing cursor from our sight so we only see our delicate hand.
     noCursor();
 }
 
@@ -55,6 +66,7 @@ function draw() {
  * Draws our dark room.
  */
 function drawRoom() {
+    // The darkness of the room; no light except that of the ball!
     background(20, 20, 40);
     curtainImage.resize(width, height);
     image(curtainImage, 0, 0)
@@ -77,12 +89,16 @@ function drawHand() {
     image(handImage, mouseX, mouseY)
 }
 
-// We will put our random fortune in here.
+// We will define our random fortune variables here.
 let fortune = undefined;
-let fortuneRead = false
+let fortuneRead = false;
 
 function mouseClicked() {
-    if (fortuneRead === false) {
+    // We will indicate where we want the mouse to be when we click (inside ball)
+    const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
+    const mouseInsideCrystalBall = (distance < crystalBall.size / 2);
+
+    if (!fortuneRead && mouseInsideCrystalBall) {
         // Getting a random number to set up 
         // the probability for our fortunes.
         const p = random();
@@ -120,20 +136,18 @@ function mouseClicked() {
 }
 
 /**
- * Makes the ball shake when you hover your hand on it and rub it!
+ * Makes the ball shake when you hover your hand on it and rub it! *needs work
  */
-function checkInput() {
+//function mouseMoved() {
+// We will indicate where we want the to be when we click (inside ball)
+// const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
+//const mouseInsideCrystalBall = (distance < crystalBall.size / 2);
 
-    const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
-    const mouseOverlapsCrystalBall = (distance < crystalBall.size / 2);
-
-    const mouseIsMoving = undefined;
-
-    if (mouseOverlapsCrystalBall) {
-        const x = crystalBall.x + random(-50, 50);
-        const y = crystalBall.y + random(-50, 50);
-    }
-}
+// if (mouseInsideCrystalBall) {
+//const x = crystalBall.x + random(-20, 20);
+// const y = crystalBall.y + random(-20, 20);
+// }
+//}
 
 // Defining r and b (rgb) variables for our ball.
 var r = 0;
@@ -145,7 +159,7 @@ var b = 650;
  */
 function drawBall() {
 
-    //push();
+    push();
     // When you move the mouse around the ball,
     // the ball's colour changes, *ooOoooUuU*.
     let r = map(mouseX, 0, 700, 0, 700);
@@ -155,8 +169,8 @@ function drawBall() {
     fill(r, 0, b);
 
     // Draw the ball.
-    circle(350, 355, 320);
-    // pop();
+    circle(crystalBall.x, crystalBall.y, crystalBall.size);
+    pop();
 }
 
 /**
