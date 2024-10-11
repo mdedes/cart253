@@ -114,6 +114,9 @@ function mouseClicked() {
     const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
     const mouseInsideCrystalBall = (distance < crystalBall.size / 2);
 
+    // The fortune will only be unveiled unless the mouse is clicked
+    // inside the circle. Once it clicks, the fotune will not regenerate
+    // until you refresh the page.
     if (!fortuneRead && mouseInsideCrystalBall) {
         // Getting a random number to set up 
         // the probability for our fortunes.
