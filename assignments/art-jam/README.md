@@ -2,7 +2,7 @@
 
 Mary Dedes
 
-[View this project online](https://mdedes.github.io/cart253/assignments/art-jam/))
+[View this project online](https://mdedes.github.io/cart253/assignments/art-jam/)
 
 ## Description
 
