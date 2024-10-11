@@ -2,7 +2,7 @@
 
 Mary Dedes
 
-[View this project online](URL_FOR_THE_RUNNING_PROJECT)
+[View this project online](https://mdedes.github.io/cart253/assignments/art-jam/))
 
 ## Description
 
@@ -16,9 +16,16 @@ This project uses [p5.js](https://p5js.org).
 
 I used a sample of code from Pippin's "random() and probability" example seen in the Conditionals module : https://editor.p5js.org/pippinbarr/sketches/8NkxcrJsi.
 
+A big thank you to Mathilde for helping me!
+
 
 ## Attribution
 
-This bit should attribute any assets or other elements used taken from other sources. For example:
+Stool image: https://www.google.com/aclk?sa=l&ai=DChcSEwj_t_ToroWJAxW9NAgFHan-ALoYABAHGgJtZA&ae=2&co=1&ase=5&gclid=CjwKCAjw9p24BhB_EiwA8ID5BjPyLNnKEKNVr9vYMa5b4wWs5BHr1K8f6bQh6u3z_L4qE1RKzz51VxoCz3QQAvD_BwE&sig=AOD64_2TIJapzLTOGK5qRxvN4In4NUjecg&ctype=5&q=&ved=2ahUKEwiejvDoroWJAxVnrYkEHWhPEuoQ9aACKAB6BAgHEDY&adurl=
 
-The fish images were sourced from the [Creative Commons image "Georgia Aquarium Fish"](https://search.creativecommons.org/photos/96f6f770-eac1-488c-8abb-16bee7bcc874) by Mike Johnston which is licensed with CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.
+Curtains images sourced from https://www.pngwing.com/en/search?q=red+curtain and edited by me in Photoshop.
+
+Hand image: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngegg.com%2Fen%2Fpng-opkcg&psig=AOvVaw1wLRYm_Gl90cMDdzZGVT_y&ust=1728705684492000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKikyda4hYkDFQAAAAAdAAAAABAE
+
+
+
