@@ -40,7 +40,7 @@ let stoolImage = undefined;
 function preload() {
     curtainImage = loadImage('assets/images/redcurtains.png');
     handImage = loadImage('assets/images/ladyhand.png');
-    stoolImage = loadImage('assets/images/stool.png')
+    stoolImage = loadImage('assets/images/stool.png');
 }
 
 /**
