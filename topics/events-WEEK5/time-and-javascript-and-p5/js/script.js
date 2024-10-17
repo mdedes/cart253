@@ -2,8 +2,7 @@
  * Time and JavaScript and p5
  * Mary Dedes
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Just looking at time in p5.
  */
 
 "use strict";
