@@ -18,7 +18,7 @@ function setup() {
 
 
 /**
- * 
+ * Does nothing!
 */
 function draw() {
 
