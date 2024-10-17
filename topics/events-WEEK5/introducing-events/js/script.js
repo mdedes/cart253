@@ -2,23 +2,35 @@
  * Introducing Events
  * Mary Dedes
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Taking a look at how events work in Javascript and p5.
  */
 
 "use strict";
 
 /**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
+ * 
 */
 function setup() {
+    createCanvas(400, 400);
+    background(0);
 
 }
 
 
 /**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
+ * 
 */
 function draw() {
 
+}
+
+/**
+ * Draws a circle at the mouse location
+ */
+function mousePressed() {
+    push();
+    noStroke();
+    fill(255, 255, 0);
+    ellipse(mouseX, mouseY, 50);
+    pop();
 }
