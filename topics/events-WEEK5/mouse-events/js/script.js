@@ -70,5 +70,4 @@ function mouseWheel(event) {
     else {
         ball.size -= 2;
     }
-
 }
