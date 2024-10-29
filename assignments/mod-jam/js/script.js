@@ -43,6 +43,10 @@ const fly = {
     speed: 3
 };
 
+let score = 0;
+
+const backgroundColour = "#87ceeb"
+
 /**
  * Creates the canvas and initializes the fly
  */
@@ -54,11 +58,12 @@ function setup() {
 }
 
 function draw() {
-    background("#87ceeb");
+    background(backgroundColour);
     moveFly();
     drawFly();
     moveFrog();
     moveTongue();
+    drawScore();
     drawFrog();
     checkTongueFlyOverlap();
 }
@@ -163,12 +168,13 @@ function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
     // Check if it's an overlap
-    const eaten = (d < frog.tongue.size/2 + fly.size/2);
+    const eaten = (d < frog.tongue.size / 2 + fly.size / 2);
     if (eaten) {
         // Reset the fly
-        resetFly();
+        resetFly()
         // Bring back the tongue
         frog.tongue.state = "inbound";
+        score++;
     }
 }
 
@@ -179,4 +185,24 @@ function mousePressed() {
     if (frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
+}
+
+/**
+ * Ends the game
+ */
+function endGame() {
+    gameOver = true;
+}
+
+/**
+ * Displays the current score at the top left
+ */
+function drawScore() {
+    push();
+    fill("white");
+    textSize(64);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text(score, width / 8, height / 8);
+    pop();
 }
