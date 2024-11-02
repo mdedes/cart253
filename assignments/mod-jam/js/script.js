@@ -29,7 +29,9 @@ const frog = {
             spaceBar: 32
         },
         state: "idle",
-        speed: 20
+        speed: 15,
+        minX: 0,
+        maxX: 640
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
@@ -150,6 +152,7 @@ function moveFrog() {
             frog.body.state = "outbound"
         }
     }
+    frog.body.x = constrain(frog.body.x, frog.body.minX, frog.body.maxX)
 }
 
 /**
