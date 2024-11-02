@@ -20,28 +20,38 @@ const frog = {
     // The frog's body has a position and size
     body: {
         x: 320,
-        y: 520,
-        size: 150
+        y: 400,
+        size: 150,
+        keys: {
+            leftArrowKey: 37,
+            rightArrowKey: 39,
+            upArrowKey: 38,
+            spaceBar: 32
+        },
+        state: "idle",
+        speed: 20
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
         x: undefined,
         y: 480,
-        size: 20,
-        speed: 20,
+        size: 10,
+        speed: 30,
         // Determines how the tongue moves each frame
         state: "idle" // State can be: idle, outbound, inbound
     }
 };
 
-// Our fly
+// Our coin
 // Has a position, size, and speed of horizontal movement
-const fly = {
+const coin = {
     x: 0,
     y: 200, // Will be random
-    size: 10,
-    speed: 3
+    size: 20,
+    speed: 5
 };
+
+let scene = 0;
 
 let score = 0;
 
@@ -52,59 +62,94 @@ const backgroundColour = "#87ceeb"
  */
 function setup() {
     createCanvas(640, 480);
-
     // Give the fly its first random position
-    resetFly();
+    resetCoin();
 }
 
 function draw() {
     background(backgroundColour);
-    moveFly();
-    drawFly();
-    moveFrog();
-    moveTongue();
-    drawScore();
-    drawFrog();
-    checkTongueFlyOverlap();
+    switch (scene) {
+        case 0:
+            fill(255);
+            textSize(50);
+            textAlign(CENTER);
+            text("Frog Prince", width / 2, height - 50);
+            if (mouseIsPressed) {
+                scene++
+            }
+            break;
+        case 1:
+            moveCoin();
+            drawCoin();
+            moveFrog();
+            moveTongue();
+            drawScore();
+            drawFrog();
+            checkTongueCoinOverlap();
+            break;
+    }
 }
 
 /**
  * Moves the fly according to its speed
  * Resets the fly if it gets all the way to the right
  */
-function moveFly() {
+function moveCoin() {
     // Move the fly
-    fly.x += fly.speed;
+    coin.x += coin.speed;
     // Handle the fly going off the canvas
-    if (fly.x > width) {
-        resetFly();
+    if (coin.x > width) {
+        resetCoin();
     }
 }
 
 /**
  * Draws the fly as a black circle
  */
-function drawFly() {
+function drawCoin() {
     push();
     noStroke();
-    fill("#000000");
-    ellipse(fly.x, fly.y, fly.size);
+    fill("yellow");
+    ellipse(coin.x, coin.y, coin.size);
     pop();
 }
 
 /**
  * Resets the fly to the left with a random y
  */
-function resetFly() {
-    fly.x = 0;
-    fly.y = random(0, 300);
+function resetCoin() {
+    coin.x = 0;
+    coin.y = random(0, 300);
 }
 
 /**
  * Moves the frog to the mouse position on x
  */
 function moveFrog() {
-    frog.body.x = mouseX;
+    if (frog.body.state === "idle") {
+        // Do nothing
+    }
+    else if (frog.body.state === "outbound") {
+        frog.body.y += -frog.body.speed;
+        if (frog.body.y <= 250) {
+            frog.body.state = "inbound"
+        }
+    }
+    else if (frog.body.state === "inbound") {
+        frog.body.y += frog.body.speed;
+        if (frog.body.y >= height) {
+            frog.body.state = "idle";
+        }
+    }
+    if (keyIsPressed === true) {
+        if (keyCode === frog.body.keys.leftArrowKey) {
+            frog.body.x -= 10;
+        } else if (keyCode === frog.body.keys.rightArrowKey) {
+            frog.body.x += 10;
+        } else if (keyCode === frog.body.keys.spaceBar && frog.body.state === "idle") {
+            frog.body.state = "outbound"
+        }
+    }
 }
 
 /**
@@ -164,14 +209,14 @@ function drawFrog() {
 /**
  * Handles the tongue overlapping the fly
  */
-function checkTongueFlyOverlap() {
+function checkTongueCoinOverlap() {
     // Get distance from tongue to fly
-    const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
+    const d = dist(frog.tongue.x, frog.tongue.y, coin.x, coin.y);
     // Check if it's an overlap
-    const eaten = (d < frog.tongue.size / 2 + fly.size / 2);
+    const eaten = (d < frog.tongue.size / 2 + coin.size / 2);
     if (eaten) {
         // Reset the fly
-        resetFly()
+        resetCoin()
         // Bring back the tongue
         frog.tongue.state = "inbound";
         score++;
@@ -181,8 +226,8 @@ function checkTongueFlyOverlap() {
 /**
  * Launch the tongue on click (if it's not launched yet)
  */
-function mousePressed() {
-    if (frog.tongue.state === "idle") {
+function keyPressed() {
+    if (keyCode === frog.body.keys.upArrowKey && frog.tongue.state === "idle") {
         frog.tongue.state = "outbound";
     }
 }
