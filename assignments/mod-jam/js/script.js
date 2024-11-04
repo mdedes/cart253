@@ -50,7 +50,11 @@ const coin = {
     x: 0,
     y: 200, // Will be random
     size: 20,
-    speed: 5
+    speed: {
+        x: 5,
+        y: 50
+    },
+    degree: 0
 };
 
 // Our curse
@@ -65,7 +69,7 @@ let scene = 0;
 
 let score = 0;
 
-let gameOverCurse = false;
+let gameOver = false;
 
 const backgroundColour = "#87ceeb"
 
@@ -101,7 +105,14 @@ function draw() {
             drawFrog();
             checkTongueCoinOverlap();
             checkFrogCurseOverlap();
+            checkGameOver();
             break;
+        case 2:
+            fill(255);
+            textSize(50);
+            textAlign(CENTER);
+            text("Frog Prince", width / 2, height - 50);
+
     }
 }
 
@@ -111,7 +122,10 @@ function draw() {
  */
 function moveCoin() {
     // Move the fly
-    coin.x += coin.speed;
+    coin.x += coin.speed.x;
+    coin.degree += 0.1;
+    coin.y = 200 + (coin.speed.y * sin(coin.degree));
+    console.log(coin.y);
     // Handle the fly going off the canvas
     if (coin.x > width) {
         resetCoin();
@@ -174,7 +188,9 @@ function checkFrogCurseOverlap() {
         // Bring back the tongue
         // frog.tongue.state = "inbound";
         // score++;
+        resetScore();
     }
+
 }
 
 /**
@@ -262,6 +278,11 @@ function drawFrog() {
     pop();
 }
 
+function checkGameOver() {
+    if (score === 3)
+        scene = 2;
+}
+
 /**
  * Handles the tongue overlapping the fly
  */
@@ -276,6 +297,7 @@ function checkTongueCoinOverlap() {
         // Bring back the tongue
         frog.tongue.state = "inbound";
         score++;
+        console.log(score)
     }
 }
 
@@ -288,11 +310,15 @@ function keyPressed() {
     }
 }
 
+function resetScore() {
+    score = 0
+}
+
 /**
  * Ends the game
  */
-function endGameCurse() {
-    gameOverCurse = true;
+function endGame() {
+    gameOver = true;
 
 }
 
