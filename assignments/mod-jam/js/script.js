@@ -20,7 +20,7 @@ const frog = {
     // The frog's body has a position and size
     body: {
         x: 320,
-        y: 400,
+        y: 450,
         size: 150,
         keys: {
             leftArrowKey: 37,
@@ -29,9 +29,9 @@ const frog = {
             spaceBar: 32
         },
         state: "idle",
-        speed: 15,
-        minX: 0,
-        maxX: 640
+        speed: 10,
+        minX: 80,
+        maxX: 560
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
@@ -53,9 +53,19 @@ const coin = {
     speed: 5
 };
 
+// Our curse
+const curse = {
+    x: 640,
+    y: 420,
+    size: 50,
+    speed: -1.5
+};
+
 let scene = 0;
 
 let score = 0;
+
+let gameOverCurse = false;
 
 const backgroundColour = "#87ceeb"
 
@@ -83,11 +93,14 @@ function draw() {
         case 1:
             moveCoin();
             drawCoin();
+            moveCurse();
+            drawCurse();
             moveFrog();
             moveTongue();
             drawScore();
             drawFrog();
             checkTongueCoinOverlap();
+            checkFrogCurseOverlap();
             break;
     }
 }
@@ -122,6 +135,46 @@ function drawCoin() {
 function resetCoin() {
     coin.x = 0;
     coin.y = random(0, 300);
+}
+
+/**
+ * Moves curse according to its speed
+ */
+function moveCurse() {
+    curse.x += curse.speed;
+    if (curse.x < 0) {
+        resetCurse();
+    }
+}
+
+function drawCurse() {
+    push();
+    noStroke();
+    fill("purple");
+    ellipse(curse.x, curse.y, curse.size);
+    pop();
+}
+
+function resetCurse() {
+    curse.x = 640;
+    curse.y = 420;
+}
+
+/**
+ * Handles the tongue overlapping the fly
+ */
+function checkFrogCurseOverlap() {
+    // Get distance from tongue to fly
+    const d = dist(frog.body.x, frog.body.y, curse.x, curse.y);
+    // Check if it's an overlap
+    const cursed = (d < frog.body.size / 2 + curse.size / 2);
+    if (cursed) {
+        // Reset the fly
+        resetCurse()
+        // Bring back the tongue
+        // frog.tongue.state = "inbound";
+        // score++;
+    }
 }
 
 /**
@@ -238,8 +291,9 @@ function keyPressed() {
 /**
  * Ends the game
  */
-function endGame() {
-    gameOver = true;
+function endGameCurse() {
+    gameOverCurse = true;
+
 }
 
 /**
