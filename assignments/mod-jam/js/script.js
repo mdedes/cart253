@@ -25,7 +25,7 @@
  * - Press the spacebar to jump - press the left arrow key right after
  *   to leap over the floating anti-wealth curse 
  * - Collect 10 coins before time runs out or he'll starve to death 
- *   and it will be your fault
+ *   and it will be your fault. Not mine- I mean the wizard's.
  * 
  * Made with p5
  * https://p5js.org/
@@ -33,178 +33,217 @@
 
 "use strict";
 
-// Our unfortunate (literally) frog prince
+// Our unfortunate (literally) frog prince.
 const frog = {
-    // The frog's body has a position and size
+    // The frog's body has a position and size.
     body: {
         x: 320,
         y: 450,
         size: 130,
-        // These are the keys that will be use to control his not-so-Majesty
+        // These are the keys that will be use to control his not-so-Majesty.
         keys: {
             leftArrowKey: 37,
             rightArrowKey: 39,
             upArrowKey: 38,
             spaceBar: 32
         },
-        //The state and speed help determine how the frog moves
+        //The state and speed help determine how the frog moves.
         state: "idle",
         speed: 10,
-        // The frog will be constrained to stay within his prison canvas
+        // The frog will be constrained to stay within his prison canvas reality.
         minX: 80,
         maxX: 560
     },
-    // The frog's tongue has a position, size, speed, and state
+    // The frog's tongue has a position, size, speed, and state.
     tongue: {
         x: undefined,
         y: 480,
         size: 10,
         speed: 30,
-        // Determines how the tongue moves each frame
-        state: "idle" // State can be: idle, outbound, inbound
+        // Determines how the tongue moves each frame.
+        state: "idle" // State can be: idle, outbound, inbound.
     }
 };
 
-// Our coin
-// Has a position, size, and speed of horizontal movement
+// Our precious magic floating coin(s).
+// Has a position, size, and speed of horizontal movement.
 const coin = {
     x: 0,
-    y: 200, // Will be random
+    y: 200, // Will be random.
     size: 20,
     speed: {
         x: 5,
         y: 8
     },
-    degree: 0
+    degree: 0 // This is used to influence the wave the coin will make.
 };
 
-// Our cursey curse that will make us bankrupt
+// Our cursey curse that will make us bankrupt!
 const curse = {
+    // Curses also come in all positions and sizes.
     x: 640,
     y: 440,
     size: 50,
-    // The curse will come from the right, from where we least expect
+    // The curse will come from the right, from where we least expect it to.
     speed: -1.5
 };
 
+// Literally setting up for some scenes. When the game reloads, 
+// it will always start at this scene.
 let scene = 0;
 
+// Setting up our score! When the game reloads, you will always start poor.
 let score = 0;
 
-// How long is the game (in milliseconds)
-let gameTime = 60 * 1000; // 10 seconds
+// How long do you have before death by starvation (in milliseconds)?
+let gameTime = 60 * 1000; // You have 1 minute of guaranteed life!
 
+// Setting up our timer variable!
+let timer;
+
+// The game is not over yet! The frog has yet to struggle.
 let gameOver = false;
 
+// Setting up our randomized outcomes post-wealth (if he gets there)!
 let drop = undefined;
 
+// Our background variable will always be the sky!
 const backgroundColour = "#87ceeb"
 
 /**
- * Creates the canvas and initializes the fly
+ * Creates the canvas and initializes the coin.
  */
 function setup() {
     createCanvas(640, 480);
-    // Give the fly its first random position
+    // Give the coin its first random position.
     resetCoin();
 }
 
+/**
+ * This is the whole frog's existence and destiny as decided by the wizard who cursed him.
+ */
 function draw() {
     background(backgroundColour);
+    // These are the possible scenes of the frog's current life.
+    // Depending on each outcome (how you interact with the game and whether you kill him or not),
+    // the scenes will switch accordingly.
     switch (scene) {
+        // This is the title of the game! When you reload the frog's life, you start here.
         case 0:
             fill(255);
             textSize(50);
             textAlign(CENTER);
             text("Frog Prince", width / 2, height - 50);
+            // When you click your mouse, the scene switches to the next one. Here, case 1.
             if (mouseIsPressed) {
+                startGameOverTimer();
                 scene++
             }
             break;
+        // This is where you desperately help the desperate frog collect coins before the time runs out!
         case 1:
-            // Start the timer for the game to be over
-            startGameOverTimer();
+            // Start the timer for the game to be over.
             moveCoin();
             drawCoin();
             moveCurse();
             drawCurse();
             moveFrog();
+            drawFrog();
             moveTongue();
             drawScore();
-            drawFrog();
             checkTongueCoinOverlap();
             checkFrogCurseOverlap();
+            // If you collect the necessary amount of coins before starving to death,
+            // there is still hope for you!
             checkCoinsCollected();
             break;
+        // When frog prince dies, he doesn't go to heaven. You just stay on this screen. Until you reload.
+        // Think about what you've done.
         case 2:
             fill(255);
             textSize(20);
             textAlign(CENTER);
             text("You died of hunger:(", width / 2, height - 50);
             break;
+        // Congrats! He didn't die! Yet! Now that you helped him make money, 
+        // he must decide what he actually does with it. And you might pay for it (see what I did there).
+        // His decision decides his fate and his fate decides his decision... 
+        // and all this will be random.
         case 3:
+            clearTimeout(timer);
+            timer = 0;
             fill(255);
             textSize(20);
             textAlign(CENTER);
             text("You now have enough coins for food!", width / 2, height - 50);
-            // Get a random number for our probability
-            // Remember it is between 0..1
+            // Getting a random number for the frog prince's destiny probability.
+            // It is between 0..1
             const p = random();
-            // Very rare! 1% of the time!
-            if ((scene = 3) && (mouseIsPressed)) {
-                if (p < 0.01) {
+            // Click the mouse to discover what fate has in store for the frog (and you).
+            if (mouseIsPressed) {
+                // 20% of the time!
+                if (p < 0.21) {
                     drop = (scene = 4);
-                }
-                // Between 0.01 and 0.21 means this one is 20% of the time
-                else if (p < 0.21) {
-                    drop = (scene = 5);
                 }
                 // Between 0.21 and 0.51 means this one is 30% of the time
                 else if (p < 0.51) {
+                    drop = (scene = 5);
+                }
+                // Between 0.51 and 0.91 means this one is 40% of the time
+                else if (p < 0.91) {
                     drop = (scene = 6)
                 }
             }
             break;
+        // HUZZAH! At last! The frog found a pamphlet advertising a kissing booth with the local princess!!
+        // If this is the frog's fate, the frog has a chance at true love's first kiss maybe. 
+        // At least a meal ticket outta this pond. Yay!!
         case 4:
             fill(255);
             textSize(20);
             textAlign(CENTER);
             text("You have enough for the kissing booth!", width / 2, height - 50);
             break;
+        // Frog prince decided to get some frog flies for the week! Maybe he's adjusting to his new life...
         case 5:
             fill(255);
             textSize(20);
             textAlign(CENTER);
             text("You bought yourself some tasty french flies for the week!", width / 2, height - 50);
             break;
+        // Frog Prince got power-hungry and decided to gamble. He lost everything and now you must restart.
+        // Tsk tsk.
         case 6:
             fill(255);
             textSize(20);
             textAlign(CENTER);
             text("You just gambled away your money. Guess you better restart.", width / 2, height - 50);
-            restartGame();
+            if (keyIsPressed) {
+                restartGame();
+            }
             break;
     }
 }
 
 /**
- * Moves the fly according to its speed
- * Resets the fly if it gets all the way to the right
+ * Moves the coin according to its speed.
+ * Resets the coin if it gets all the way to the right.
  */
 function moveCoin() {
-    // Move the fly
+    // Move the coin.
     coin.x += coin.speed.x;
+    // We are going to make the coins float around in magical waves.
     coin.degree += 0.2;
     coin.y = (coin.y) + (coin.speed.y * sin(coin.degree));
     console.log(coin.y);
-    // Handle the fly going off the canvas
+    // If a coin goes off canvas, a new one comes back!
     if (coin.x > width) {
         resetCoin();
     }
 }
 
 /**
- * Draws the fly as a black circle
+ * Draws the beautful coin as a black circle.
  */
 function drawCoin() {
     push();
@@ -259,11 +298,10 @@ function checkFrogCurseOverlap() {
         // Bring back the tongue
         resetScore();
     }
-
 }
 
 /**
- * Moves the frog to the mouse position on x
+ * Moves the frog to the mouse position on x.
  */
 function moveFrog() {
     if (frog.body.state === "idle") {
@@ -387,7 +425,7 @@ function resetScore() {
  * Starts a timer that will end the game
  */
 function startGameOverTimer() {
-    setTimeout(frogDies, gameTime);
+    timer = setTimeout(frogDies, gameTime);
 }
 
 /**
@@ -400,9 +438,11 @@ function frogDies() {
 }
 
 function restartGame() {
-    if ((scene = 6) && (mouseIsPressed)) {
-        scene = 1
-    }
+    scene = 1;
+    score = 0;
+    gameOver = false;
+    gameTime = 60 * 1000;
+    startGameOverTimer();
 }
 
 /**
