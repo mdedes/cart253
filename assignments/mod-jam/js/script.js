@@ -21,7 +21,7 @@ const frog = {
     body: {
         x: 320,
         y: 450,
-        size: 150,
+        size: 130,
         keys: {
             leftArrowKey: 37,
             rightArrowKey: 39,
@@ -52,7 +52,7 @@ const coin = {
     size: 20,
     speed: {
         x: 5,
-        y: 50
+        y: 8
     },
     degree: 0
 };
@@ -60,7 +60,7 @@ const coin = {
 // Our curse
 const curse = {
     x: 640,
-    y: 420,
+    y: 440,
     size: 50,
     speed: -1.5
 };
@@ -68,6 +68,9 @@ const curse = {
 let scene = 0;
 
 let score = 0;
+
+// How long is the game (in milliseconds)
+let gameTime = 10 * 1000; // 10 seconds
 
 let gameOver = false;
 
@@ -95,6 +98,9 @@ function draw() {
             }
             break;
         case 1:
+            // Start the timer for the game to be over
+            startGameOverTimer();
+            // if (!gameOver) {
             moveCoin();
             drawCoin();
             moveCurse();
@@ -105,14 +111,24 @@ function draw() {
             drawFrog();
             checkTongueCoinOverlap();
             checkFrogCurseOverlap();
-            checkGameOver();
+            checkCoinsCollected();
+            // }
+            // else {
+            //drawEndGame();
+            // }
             break;
         case 2:
             fill(255);
+            textSize(20);
+            textAlign(CENTER);
+            text("You now have enough coins for food and kissing booth!", width / 2, height - 50);
+            break;
+        case 3:
+            fill(255);
             textSize(50);
             textAlign(CENTER);
-            text("Frog Prince", width / 2, height - 50);
-
+            text("You died of hunger!", width / 2, height - 50);
+            break;
     }
 }
 
@@ -123,8 +139,8 @@ function draw() {
 function moveCoin() {
     // Move the fly
     coin.x += coin.speed.x;
-    coin.degree += 0.1;
-    coin.y = 200 + (coin.speed.y * sin(coin.degree));
+    coin.degree += 0.2;
+    coin.y = (coin.y) + (coin.speed.y * sin(coin.degree));
     console.log(coin.y);
     // Handle the fly going off the canvas
     if (coin.x > width) {
@@ -171,7 +187,7 @@ function drawCurse() {
 
 function resetCurse() {
     curse.x = 640;
-    curse.y = 420;
+    curse.y = 440;
 }
 
 /**
@@ -186,8 +202,6 @@ function checkFrogCurseOverlap() {
         // Reset the fly
         resetCurse()
         // Bring back the tongue
-        // frog.tongue.state = "inbound";
-        // score++;
         resetScore();
     }
 
@@ -278,8 +292,8 @@ function drawFrog() {
     pop();
 }
 
-function checkGameOver() {
-    if (score === 3)
+function checkCoinsCollected() {
+    if (score === 2)
         scene = 2;
 }
 
@@ -315,12 +329,21 @@ function resetScore() {
 }
 
 /**
+ * Starts a timer that will end the game
+ */
+function startGameOverTimer() {
+    setTimeout(endGame, gameTime);
+}
+
+/**
  * Ends the game
  */
 function endGame() {
-    gameOver = true;
-
+    if (score < 2) {
+        (gameOver = true) && (scene = 3);
+    }
 }
+
 
 /**
  * Displays the current score at the top left
