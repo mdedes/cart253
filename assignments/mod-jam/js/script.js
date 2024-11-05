@@ -13,7 +13,7 @@
  * Will he ever escape this miserable existence?? Will he ever get his
  * happily ever after??? 
  * 
- * Can he????
+ * *Can* he????
  * 
  * Maybe you can help! By maybe I mean you definitely are going to help.
  * 
@@ -50,7 +50,7 @@ const frog = {
         //The state and speed help determine how the frog moves
         state: "idle",
         speed: 10,
-        // The frog will be constrained to stay within the canvas
+        // The frog will be constrained to stay within his prison canvas
         minX: 80,
         maxX: 560
     },
@@ -96,6 +96,8 @@ let gameTime = 60 * 1000; // 10 seconds
 
 let gameOver = false;
 
+let drop = undefined;
+
 const backgroundColour = "#87ceeb"
 
 /**
@@ -133,19 +135,54 @@ function draw() {
             checkTongueCoinOverlap();
             checkFrogCurseOverlap();
             checkCoinsCollected();
-
             break;
         case 2:
             fill(255);
             textSize(20);
             textAlign(CENTER);
-            text("You now have enough coins for food and kissing booth!", width / 2, height - 50);
+            text("You died of hunger:(", width / 2, height - 50);
             break;
         case 3:
             fill(255);
-            textSize(50);
+            textSize(20);
             textAlign(CENTER);
-            text("You died of hunger!", width / 2, height - 50);
+            text("You now have enough coins for food!", width / 2, height - 50);
+            // Get a random number for our probability
+            // Remember it is between 0..1
+            const p = random();
+            // Very rare! 1% of the time!
+            if ((scene = 3) && (mouseIsPressed)) {
+                if (p < 0.01) {
+                    drop = (scene = 4);
+                }
+                // Between 0.01 and 0.21 means this one is 20% of the time
+                else if (p < 0.21) {
+                    drop = (scene = 5);
+                }
+                // Between 0.21 and 0.51 means this one is 30% of the time
+                else if (p < 0.51) {
+                    drop = (scene = 6)
+                }
+            }
+            break;
+        case 4:
+            fill(255);
+            textSize(20);
+            textAlign(CENTER);
+            text("You have enough for the kissing booth!", width / 2, height - 50);
+            break;
+        case 5:
+            fill(255);
+            textSize(20);
+            textAlign(CENTER);
+            text("You bought yourself some tasty french flies for the week!", width / 2, height - 50);
+            break;
+        case 6:
+            fill(255);
+            textSize(20);
+            textAlign(CENTER);
+            text("You just gambled away your money. Guess you better restart.", width / 2, height - 50);
+            restartGame();
             break;
     }
 }
@@ -312,7 +349,7 @@ function drawFrog() {
 
 function checkCoinsCollected() {
     if (score === 10)
-        scene = 2;
+        scene = 3;
 }
 
 /**
@@ -358,7 +395,13 @@ function startGameOverTimer() {
  */
 function frogDies() {
     if (score < 10) {
-        (gameOver = true) && (scene = 3);
+        (gameOver = true) && (scene = 2);
+    }
+}
+
+function restartGame() {
+    if ((scene = 6) && (mouseIsPressed)) {
+        scene = 1
     }
 }
 
