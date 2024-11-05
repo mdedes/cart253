@@ -1,13 +1,31 @@
 /**
- * Frogfrogfrog
- * Pippin Barr
+ * Hungry Hungry Frog Prince
  * 
- * A game of catching flies with your frog-tongue
+ * Once upon a time there was a prince whose life got turned
+ * upside down afer being transformed into a frog by a vengeful wizard. 
+ * Now, he is not only forced to *earn* his living- devastating- 
+ * but he must also be one with nature... oh the hu/frog/man/non-prince/ity(?)! 
  * 
- * Instructions:
- * - Move the frog with your mouse
- * - Click to launch the tongue
- * - Catch flies
+ * Now he must spend the rest of his days just like any regular ol' frog-
+ * catching coins to buy flies and dodging anti-wealth curses before starving 
+ * to death.
+ * 
+ * Will he ever escape this miserable existence?? Will he ever get his
+ * happily ever after??? 
+ * 
+ * Can he????
+ * 
+ * Maybe you can help! By maybe I mean you definitely are going to help.
+ * 
+ * To help this spoiled frog prince who probably deserves all this, simply:
+ * 
+ * - Move the frog left by pressing the right arrow key, and right by pressing 
+ *   the left arrow key (the wizard cursed the keys too, good luck)
+ * - Press the up arrow to launch the tongue and catch coins (pretty intuitive)
+ * - Press the spacebar to jump - press the left arrow key right after
+ *   to leap over the floating anti-wealth curse 
+ * - Collect 10 coins before time runs out or he'll starve to death 
+ *   and it will be your fault
  * 
  * Made with p5
  * https://p5js.org/
@@ -15,21 +33,24 @@
 
 "use strict";
 
-// Our frog
+// Our unfortunate (literally) frog prince
 const frog = {
     // The frog's body has a position and size
     body: {
         x: 320,
         y: 450,
         size: 130,
+        // These are the keys that will be use to control his not-so-Majesty
         keys: {
             leftArrowKey: 37,
             rightArrowKey: 39,
             upArrowKey: 38,
             spaceBar: 32
         },
+        //The state and speed help determine how the frog moves
         state: "idle",
         speed: 10,
+        // The frog will be constrained to stay within the canvas
         minX: 80,
         maxX: 560
     },
@@ -57,11 +78,12 @@ const coin = {
     degree: 0
 };
 
-// Our curse
+// Our cursey curse that will make us bankrupt
 const curse = {
     x: 640,
     y: 440,
     size: 50,
+    // The curse will come from the right, from where we least expect
     speed: -1.5
 };
 
@@ -70,7 +92,7 @@ let scene = 0;
 let score = 0;
 
 // How long is the game (in milliseconds)
-let gameTime = 10 * 1000; // 10 seconds
+let gameTime = 60 * 1000; // 10 seconds
 
 let gameOver = false;
 
@@ -100,7 +122,6 @@ function draw() {
         case 1:
             // Start the timer for the game to be over
             startGameOverTimer();
-            // if (!gameOver) {
             moveCoin();
             drawCoin();
             moveCurse();
@@ -112,10 +133,7 @@ function draw() {
             checkTongueCoinOverlap();
             checkFrogCurseOverlap();
             checkCoinsCollected();
-            // }
-            // else {
-            //drawEndGame();
-            // }
+
             break;
         case 2:
             fill(255);
@@ -227,9 +245,9 @@ function moveFrog() {
         }
     }
     if (keyIsPressed === true) {
-        if (keyCode === frog.body.keys.leftArrowKey) {
+        if (keyCode === frog.body.keys.rightArrowKey) {
             frog.body.x -= 10;
-        } else if (keyCode === frog.body.keys.rightArrowKey) {
+        } else if (keyCode === frog.body.keys.leftArrowKey) {
             frog.body.x += 10;
         } else if (keyCode === frog.body.keys.spaceBar && frog.body.state === "idle") {
             frog.body.state = "outbound"
@@ -293,7 +311,7 @@ function drawFrog() {
 }
 
 function checkCoinsCollected() {
-    if (score === 2)
+    if (score === 10)
         scene = 2;
 }
 
@@ -332,18 +350,17 @@ function resetScore() {
  * Starts a timer that will end the game
  */
 function startGameOverTimer() {
-    setTimeout(endGame, gameTime);
+    setTimeout(frogDies, gameTime);
 }
 
 /**
  * Ends the game
  */
-function endGame() {
-    if (score < 2) {
+function frogDies() {
+    if (score < 10) {
         (gameOver = true) && (scene = 3);
     }
 }
-
 
 /**
  * Displays the current score at the top left
