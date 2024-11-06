@@ -181,7 +181,7 @@ function draw() {
             fill(255);
             textSize(15);
             textAlign(CENTER);
-            text("You now have enough coins for food! Click to find out what Frog Prince does with them...", width / 2, height - 50);
+            text("He now has enough coins for food! Click to find out what Frog Prince does with them...", width / 2, height - 50);
             // Getting a random number for the frog prince's destiny probability.
             // It is between 0..1
             const p = random();
@@ -215,7 +215,7 @@ function draw() {
             fill(255);
             textSize(15);
             textAlign(CENTER);
-            text("You bought yourself some tasty french flies for the week! Being a frog ain't so bad...", width / 2, height - 50);
+            text("He bought himself some tasty french flies for the week! Being a frog ain't so bad...", width / 2, height - 50);
             break;
         // Frog Prince got power-hungry and decided to gamble. He lost everything and now you must restart.
         // Tsk tsk.
@@ -223,7 +223,7 @@ function draw() {
             fill(255);
             textSize(15);
             textAlign(CENTER);
-            text("You just gambled away your money. Guess you better restart. Press any key to try again.", width / 2, height - 50);
+            text("He just gambled away his money. Guess you better restart. Press any key to try again.", width / 2, height - 50);
             if (keyIsPressed) {
                 restartGame();
             }
