@@ -1,24 +1,16 @@
 # Starting points
 
+IDEA:
 
-Finding metro tickets on the ground and trying to sell them
+A frog prince is hungry and looking for magic gold coins to buy his food! He has to be careful however and jump (spacebar) to avoid curses shooting at him.
 
-**Frog eating flies but it gets harder and harder to catch them**
+After catching a certain amount of coins, the game stops and says he has enough money to buy food and partake at the local kingdom's kissing booth!
 
-Swimming lessons but controlling your body is really hard
 
-Crossing the street and it’s busy
+Title and instructions at beginning
 
-Riding a tricycle but the wheel keeps falling off
+Frog stays in one place, you have to click in the spot you want the tongue to land. You press spacebar to make fly jump and avoid shooting objects.
 
-Shaving people’s heads in beautiful patterns and showing them at an art gallery
+The is a point collector at top corner of screen.
 
-Making cups out of clay and seeing what cafe customers say about them
-
-Growing plants that eat you
-
-Keeping a computer mouse as a pet and looking after it
-
-Rewiring a light
-
-Cooking spaghetti with a dog
+After collecting 20 coins, the game stops and reveals you have enough money for food and to go to local kissing booth.
