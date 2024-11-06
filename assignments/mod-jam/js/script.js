@@ -1,5 +1,5 @@
 /**
- * Hungry Hungry Frog Prince
+ * Frog Prince
  * 
  * Once upon a time there was a prince whose life got turned
  * upside down afer being transformed into a frog by a vengeful wizard. 
@@ -24,8 +24,10 @@
  * - Press the up arrow to launch the tongue and catch coins (pretty intuitive)
  * - Press the spacebar to jump - press the left arrow key right after
  *   to leap over the floating anti-wealth curse 
- * - Collect 10 coins before time runs out or he'll starve to death 
+ * - Collect 10 coins before a minute runs out or he'll starve to death 
  *   and it will be your fault. Not mine- I mean the wizard's.
+ * - If you successfully collect enough coins, our frog lives, but he must 
+ *   properly manage his finances or else...
  * 
  * Made with p5
  * https://p5js.org/
@@ -87,8 +89,7 @@ const curse = {
     // The curse will come from the right, from where we least expect it to.
     speed: -1.5
 };
-
-// Literally setting up for some scenes. When the game reloads, 
+//Setting up for some scenes. When the game reloads, 
 // it will always start at this scene.
 let scene = 0;
 
@@ -236,14 +237,14 @@ function moveCoin() {
     coin.degree += 0.2;
     coin.y = (coin.y) + (coin.speed.y * sin(coin.degree));
     console.log(coin.y);
-    // If a coin goes off canvas, a new one comes back!
+    // If a coin goes off canvas, a new one comes back! *Magic*.
     if (coin.x > width) {
         resetCoin();
     }
 }
 
 /**
- * Draws the beautful coin as a black circle.
+ * Draws the beautful coin as a golden circle.
  */
 function drawCoin() {
     push();
@@ -254,7 +255,7 @@ function drawCoin() {
 }
 
 /**
- * Resets the fly to the left with a random y
+ * Resets the coin to the left with a random y.
  */
 function resetCoin() {
     coin.x = 0;
@@ -262,7 +263,7 @@ function resetCoin() {
 }
 
 /**
- * Moves curse according to its speed
+ * Moves curse according to its speed.
  */
 function moveCurse() {
     curse.x += curse.speed;
@@ -271,6 +272,9 @@ function moveCurse() {
     }
 }
 
+/**
+ * Draws our cursey curse to be a purple ball.
+ */
 function drawCurse() {
     push();
     noStroke();
@@ -279,40 +283,46 @@ function drawCurse() {
     pop();
 }
 
+/**
+ * Resets curse to the right and stays and the same level.
+ */
 function resetCurse() {
     curse.x = 640;
     curse.y = 440;
 }
 
 /**
- * Handles the tongue overlapping the fly
+ * Ensures the curse curses the frog if they overlap.
  */
 function checkFrogCurseOverlap() {
-    // Get distance from tongue to fly
+    // Get distance from frog to curse.
     const d = dist(frog.body.x, frog.body.y, curse.x, curse.y);
-    // Check if it's an overlap
+    // Check if the curse actually overlaps the frog.
     const cursed = (d < frog.body.size / 2 + curse.size / 2);
     if (cursed) {
-        // Reset the fly
+        // Reset the curse.
         resetCurse()
-        // Bring back the tongue
+        // Frog prince loses all his coins.
         resetScore();
     }
 }
 
 /**
- * Moves the frog to the mouse position on x.
+ * Moves the frog using some cursed keys.
  */
 function moveFrog() {
+    // The frog doesn't do anything at this state.
     if (frog.body.state === "idle") {
-        // Do nothing
+        // Does nothing.
     }
+    // Determines how frog jumps up at this state.
     else if (frog.body.state === "outbound") {
         frog.body.y += -frog.body.speed;
         if (frog.body.y <= 250) {
             frog.body.state = "inbound"
         }
     }
+    // Determines how frog comes down and is no longer jumping (until you make it).
     else if (frog.body.state === "inbound") {
         frog.body.y += frog.body.speed;
         if (frog.body.y >= height) {
@@ -320,39 +330,43 @@ function moveFrog() {
         }
     }
     if (keyIsPressed === true) {
+        // When you press the right arrow key, the frog moves left.
         if (keyCode === frog.body.keys.rightArrowKey) {
             frog.body.x -= 10;
+            // When you press the left arrow key, the frog moves right.
         } else if (keyCode === frog.body.keys.leftArrowKey) {
             frog.body.x += 10;
+            // When you press the spacebar, the frog jumps.
         } else if (keyCode === frog.body.keys.spaceBar && frog.body.state === "idle") {
             frog.body.state = "outbound"
         }
     }
+    // The frog can't escape the canvas! He is constrained to stay in.
     frog.body.x = constrain(frog.body.x, frog.body.minX, frog.body.maxX)
 }
 
 /**
- * Handles moving the tongue based on its state
+ * Handles moving the tongue based on its state.
  */
 function moveTongue() {
-    // Tongue matches the frog's x
+    // Tongue matches the frog's x.
     frog.tongue.x = frog.body.x;
-    // If the tongue is idle, it doesn't do anything
+    // If the tongue is idle, it doesn't do anything.
     if (frog.tongue.state === "idle") {
         // Do nothing
     }
-    // If the tongue is outbound, it moves up
+    // If the tongue is outbound, it moves up.
     else if (frog.tongue.state === "outbound") {
         frog.tongue.y += -frog.tongue.speed;
-        // The tongue bounces back if it hits the top
+        // The tongue bounces back if it hits the top.
         if (frog.tongue.y <= 0) {
             frog.tongue.state = "inbound";
         }
     }
-    // If the tongue is inbound, it moves down
+    // If the tongue is inbound, it moves down.
     else if (frog.tongue.state === "inbound") {
         frog.tongue.y += frog.tongue.speed;
-        // The tongue stops if it hits the bottom
+        // The tongue stops if it hits the bottom.
         if (frog.tongue.y >= height) {
             frog.tongue.state = "idle";
         }
@@ -360,17 +374,17 @@ function moveTongue() {
 }
 
 /**
- * Displays the tongue (tip and line connection) and the frog (body)
+ * Displays the tongue (tip and line connection) and the frog (body).
  */
 function drawFrog() {
-    // Draw the tongue tip
+    // Draw the grippy tongue tip.
     push();
     fill("#ff0000");
     noStroke();
     ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
     pop();
 
-    // Draw the rest of the tongue
+    // Draw the rest of the tongue.
     push();
     stroke("#ff0000");
     strokeWeight(frog.tongue.size);
@@ -385,23 +399,27 @@ function drawFrog() {
     pop();
 }
 
+/**
+ * Checks that if you help our frog collect the necessary amount of coins, 
+ * he survives!
+ */
 function checkCoinsCollected() {
     if (score === 10)
         scene = 3;
 }
 
 /**
- * Handles the tongue overlapping the fly
+ * Handles the tongue overlapping the coin.
  */
 function checkTongueCoinOverlap() {
-    // Get distance from tongue to fly
+    // Getting distance from tongue to coin.
     const d = dist(frog.tongue.x, frog.tongue.y, coin.x, coin.y);
-    // Check if it's an overlap
+    // Check if it's an overlap.
     const eaten = (d < frog.tongue.size / 2 + coin.size / 2);
     if (eaten) {
-        // Reset the fly
-        resetCoin()
-        // Bring back the tongue
+        // Reset the coin.
+        resetCoin();
+        // Bring back the tongue.
         frog.tongue.state = "inbound";
         score++;
         console.log(score)
@@ -409,7 +427,7 @@ function checkTongueCoinOverlap() {
 }
 
 /**
- * Launch the tongue on click (if it's not launched yet)
+ * Launch the tongue on click (if it's not launched yet).
  */
 function keyPressed() {
     if (keyCode === frog.body.keys.upArrowKey && frog.tongue.state === "idle") {
@@ -417,19 +435,22 @@ function keyPressed() {
     }
 }
 
+/**
+ * Resets the score back to 0.
+ */
 function resetScore() {
     score = 0
 }
 
 /**
- * Starts a timer that will end the game
+ * Starts a timer that will kill the frog (end the game).
  */
 function startGameOverTimer() {
     timer = setTimeout(frogDies, gameTime);
 }
 
 /**
- * Ends the game
+ * Starves the frog. 
  */
 function frogDies() {
     if (score < 10) {
@@ -437,6 +458,9 @@ function frogDies() {
     }
 }
 
+/**
+ * Resetting the frog's miserabe coin hunting experience.
+ */
 function restartGame() {
     scene = 1;
     score = 0;
@@ -446,7 +470,7 @@ function restartGame() {
 }
 
 /**
- * Displays the current score at the top left
+ * Displays how many coins have currently been collected.
  */
 function drawScore() {
     push();
