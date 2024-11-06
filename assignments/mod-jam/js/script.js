@@ -7,7 +7,7 @@
  * but he must also be one with nature... oh the hu/frog/man/non-prince/ity(?)! 
  * 
  * Now he must spend the rest of his days just like any regular ol' frog-
- * catching coins to buy flies and dodging anti-wealth curses before starving 
+ * catching coins to satisfy his money hunger (and to buy flies) and dodging anti-wealth curses before starving 
  * to death.
  * 
  * Will he ever escape this miserable existence?? Will he ever get his
@@ -28,6 +28,10 @@
  *   and it will be your fault. Not mine- I mean the wizard's.
  * - If you successfully collect enough coins, our frog lives, but he must 
  *   properly manage his finances or else...
+ * 
+ * *NOTE* The next step would've been to add fun images to better illustrate what is going on.
+ * This would have made it look more polished. As new ideas about the concept popped up while I worked, 
+ * I just prioritized making sure the basic program worked well at least. 
  * 
  * Made with p5
  * https://p5js.org/
@@ -163,7 +167,7 @@ function draw() {
         // Think about what you've done.
         case 2:
             fill(255);
-            textSize(20);
+            textSize(50);
             textAlign(CENTER);
             text("You died of hunger:(", width / 2, height - 50);
             break;
@@ -175,9 +179,9 @@ function draw() {
             clearTimeout(timer);
             timer = 0;
             fill(255);
-            textSize(20);
+            textSize(15);
             textAlign(CENTER);
-            text("You now have enough coins for food!", width / 2, height - 50);
+            text("You now have enough coins for food! Click to find out what Frog Prince does with them...", width / 2, height - 50);
             // Getting a random number for the frog prince's destiny probability.
             // It is between 0..1
             const p = random();
@@ -202,24 +206,24 @@ function draw() {
         // At least a meal ticket outta this pond. Yay!!
         case 4:
             fill(255);
-            textSize(20);
+            textSize(15);
             textAlign(CENTER);
-            text("You have enough for the kissing booth!", width / 2, height - 50);
+            text("Frog Prince found a pamphlet adversting the local princess's kissing booth! We have enough money! Hurray!!", width / 2, height - 50);
             break;
         // Frog prince decided to get some frog flies for the week! Maybe he's adjusting to his new life...
         case 5:
             fill(255);
-            textSize(20);
+            textSize(15);
             textAlign(CENTER);
-            text("You bought yourself some tasty french flies for the week!", width / 2, height - 50);
+            text("You bought yourself some tasty french flies for the week! Being a frog ain't so bad...", width / 2, height - 50);
             break;
         // Frog Prince got power-hungry and decided to gamble. He lost everything and now you must restart.
         // Tsk tsk.
         case 6:
             fill(255);
-            textSize(20);
+            textSize(15);
             textAlign(CENTER);
-            text("You just gambled away your money. Guess you better restart.", width / 2, height - 50);
+            text("You just gambled away your money. Guess you better restart. Press any key to try again.", width / 2, height - 50);
             if (keyIsPressed) {
                 restartGame();
             }
@@ -245,7 +249,7 @@ function moveCoin() {
 }
 
 /**
- * Draws the beautful coin as a golden circle.
+ * Draws the beautiful coin as a golden circle.
  */
 function drawCoin() {
     push();
@@ -440,7 +444,7 @@ function keyPressed() {
  * Resets the score back to 0.
  */
 function resetScore() {
-    score = 0
+    score = 0;
 }
 
 /**
