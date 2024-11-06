@@ -89,6 +89,7 @@ const curse = {
     // The curse will come from the right, from where we least expect it to.
     speed: -1.5
 };
+
 //Setting up for some scenes. When the game reloads, 
 // it will always start at this scene.
 let scene = 0;
