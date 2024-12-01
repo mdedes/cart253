@@ -65,23 +65,68 @@ let crystalBallBs = [
     {
         x: 150,
         y: 250,
-        size: 90,
+        size: 100,
         floatiness: 4
     },
     {
         x: 550,
         y: 250,
-        size: 90,
+        size: 100,
         floatiness: 4
     },
     {
         x: 350,
-        y: 355,
-        size: 320,
+        y: 370,
+        size: 295,
         floatiness: 0
     }
 ];
 
+// Our lucky balls C.
+let crystalBallCs = [
+    {
+        x: 155,
+        y: 255,
+        size: 90,
+        floatiness: 0
+    },
+    {
+        x: 152,
+        y: 370,
+        size: 90,
+        floatiness: 0
+    },
+    {
+        x: 230,
+        y: 450,
+        size: 90,
+        floatiness: 0
+    },
+    {
+        x: 350,
+        y: 480,
+        size: 90,
+        floatiness: 0
+    },
+    {
+        x: 470,
+        y: 450,
+        size: 90,
+        floatiness: 0
+    },
+    {
+        x: 548,
+        y: 370,
+        size: 90,
+        floatiness: 0
+    },
+    {
+        x: 545,
+        y: 255,
+        size: 90,
+        floatiness: 0
+    }
+]
 
 // Defining r and b (rgb) variables for our balls.
 var r = 0;
@@ -130,6 +175,9 @@ function draw() {
         }
         else if (keyCode === keys.fortuneTellingB) {
             drawFortuneTellingB()
+        }
+        else if (keyCode === keys.fortuneTellingC) {
+            drawFortuneTellingC()
         }
     }
 }
@@ -183,6 +231,12 @@ function drawFortuneTellingB() {
     drawHand();
 }
 
+function drawFortuneTellingC() {
+    drawRoom();
+    drawStool();
+    drawCrystalBallC();
+    drawHand();
+}
 //function mouseClicked() {
 // We will indicate where we want the mouse to be when we click (over ball).
 //   const distance = dist(mouseX, mouseY, menuCrystalBall.x, menuCrystalBall.y);
@@ -228,6 +282,12 @@ function drawCrystalBallB() {
     }
     drawLeftFrontLegA();
     drawRightFrontLegA();
+}
+
+function drawCrystalBallC() {
+    for (let crystalBallC of crystalBallCs) {
+        drawBallC(crystalBallC)
+    }
 }
 
 /**
@@ -380,5 +440,20 @@ function drawBallB(crystalBallB) {
     // Style the ball.
     fill(r, 0, b);
     ellipse(crystalBallB.x, crystalBallB.y, crystalBallB.size);
+    pop();
+}
+
+function drawBallC(crystalBallC) {
+    push();
+    noStroke();
+
+    // When you move the mouse around the ball,
+    // the ball's colour changes, *ooOoooUuU*.
+    let r = map(mouseX, 100, 600, 100, 600);
+    let b = map(mouseX, 100, 600, 600, 100);
+
+    // Style the ball.
+    fill(r, 0, b);
+    ellipse(crystalBallC.x, crystalBallC.y, crystalBallC.size);
     pop();
 }
