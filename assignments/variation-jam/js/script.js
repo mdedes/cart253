@@ -22,38 +22,6 @@
 
 "use strict";
 
-// Our lovely ball A.
-let crystalBallA = {
-    //Position
-    x: 350,
-    y: 355,
-    // Size
-    size: 320
-}
-
-// Defining r and b (rgb) variables for our ball.
-var r = 0;
-var b = 650;
-
-// Setting up our image variables.
-let curtainImage = undefined;
-let handImage = undefined;
-let stoolImage = undefined;
-
-// Loading our hand, curtain and stool images into the program.
-function preload() {
-    curtainImage = loadImage('assets/images/redcurtains.png');
-    handImage = loadImage('assets/images/ladyhand.png');
-    stoolImage = loadImage('assets/images/stool.png');
-}
-
-// Keys we will use to separate variations.
-const keys = {
-    fortuneTellingA: 65,
-    fortuneTellingB: 66,
-    fortuneTellingC: 67
-}
-
 // Menu crystal balls so you can choose your adventure - or fortune telling experience rather.
 let menuCrystalBalls = [
     {
@@ -82,6 +50,63 @@ let menuCrystalBalls = [
     }
 ];
 
+
+// Our lovely ball A.
+let crystalBallA = {
+    //Position
+    x: 350,
+    y: 355,
+    // Size
+    size: 320
+}
+
+// Our mystical balls B.
+let crystalBallBs = [
+    {
+        x: 150,
+        y: 250,
+        size: 90,
+        floatiness: 4
+    },
+    {
+        x: 550,
+        y: 250,
+        size: 90,
+        floatiness: 4
+    },
+    {
+        x: 350,
+        y: 355,
+        size: 320,
+        floatiness: 0
+    }
+];
+
+
+// Defining r and b (rgb) variables for our balls.
+var r = 0;
+var b = 650;
+
+// Setting up our image variables.
+let curtainImage = undefined;
+let handImage = undefined;
+let stoolImage = undefined;
+
+// Loading our hand, curtain and stool images into the program.
+function preload() {
+    curtainImage = loadImage('assets/images/redcurtains.png');
+    handImage = loadImage('assets/images/ladyhand.png');
+    stoolImage = loadImage('assets/images/stool.png');
+}
+
+// Keys we will use to separate variations.
+const keys = {
+    fortuneTellingA: 65,
+    fortuneTellingB: 66,
+    fortuneTellingC: 67
+}
+
+
 /**
  * Creating a 700x800 canvas to set up the scene.
 */
@@ -103,8 +128,8 @@ function draw() {
         if (keyCode === keys.fortuneTellingA) {
             drawFortuneTellingA()
         }
-        else if (keycode === keys.fortuneTellingB) {
-
+        else if (keyCode === keys.fortuneTellingB) {
+            drawFortuneTellingB()
         }
     }
 }
@@ -154,7 +179,7 @@ function drawFortuneTellingA() {
 function drawFortuneTellingB() {
     drawRoom();
     drawStool();
-    drawCrystalBallA();
+    drawCrystalBallB();
     drawHand();
 }
 
@@ -192,6 +217,15 @@ function drawStool() {
 function drawCrystalBallA() {
     drawBallA();
     drawFortuneA()
+    drawLeftFrontLegA();
+    drawRightFrontLegA();
+}
+
+function drawCrystalBallB() {
+    //drawFortuneA()
+    for (let crystalBallB of crystalBallBs) {
+        drawBallB(crystalBallB);
+    }
     drawLeftFrontLegA();
     drawRightFrontLegA();
 }
@@ -330,5 +364,21 @@ function drawFortuneA() {
     textSize(13);
     fill('white')
     text(fortuneA, 350, 355);
+    pop();
+}
+
+
+function drawBallB(crystalBallB) {
+    push();
+    noStroke();
+
+    // When you move the mouse around the ball,
+    // the ball's colour changes, *ooOoooUuU*.
+    let r = map(mouseX, 100, 600, 100, 600);
+    let b = map(mouseX, 100, 600, 600, 100);
+
+    // Style the ball.
+    fill(r, 0, b);
+    ellipse(crystalBallB.x, crystalBallB.y, crystalBallB.size);
     pop();
 }
