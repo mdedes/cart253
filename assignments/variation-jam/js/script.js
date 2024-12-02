@@ -22,29 +22,31 @@
 
 "use strict";
 
+let crystalBallState = undefined
+
 // Menu crystal balls so you can choose your adventure - or fortune telling experience rather.
 let menuCrystalBalls = [
     {
         x: 150,
-        y: 400,
+        y: 450,
         size: 100,
         floatiness: 5
     },
     {
-        x: 225,
+        x: 240,
         y: 600,
         size: 100,
         floatiness: 5
     },
     {
-        x: 475,
+        x: 460,
         y: 600,
         size: 100,
         floatiness: 5
     },
     {
         x: 550,
-        y: 400,
+        y: 450,
         size: 100,
         floatiness: 5
     }
@@ -64,21 +66,28 @@ let crystalBallA = {
 let crystalBallBs = [
     {
         x: 150,
+        originalY: 250,
         y: 250,
         size: 100,
-        floatiness: 4
+        floatiness: 4,
+        angle: 0
+
     },
     {
         x: 550,
+        originalY: 250,
         y: 250,
         size: 100,
-        floatiness: 4
+        floatiness: 4,
+        angle: 0
     },
     {
         x: 350,
+        originalY: 370,
         y: 370,
         size: 295,
-        floatiness: 0
+        floatiness: 0,
+        angle: 0
     }
 ];
 
@@ -169,17 +178,23 @@ function setup() {
 function draw() {
     drawTitleCard();
     drawHand();
-    if (keyIsPressed) {
-        if (keyCode === keys.fortuneTellingA) {
-            drawFortuneTellingA()
-        }
-        else if (keyCode === keys.fortuneTellingB) {
-            drawFortuneTellingB()
-        }
-        else if (keyCode === keys.fortuneTellingC) {
-            drawFortuneTellingC()
-        }
+    if (crystalBallState == "A") {
+        drawFortuneTellingA()
     }
+    else if (crystalBallState == "B") {
+        drawFortuneTellingB()
+    }
+    // if (keyIsPressed) {
+    //     if (keyCode === keys.fortuneTellingA) {
+    //         drawFortuneTellingA()
+    //     }
+    //     else if (keyCode === keys.fortuneTellingB) {
+    //         drawFortuneTellingB()
+    //     }
+    //     else if (keyCode === keys.fortuneTellingC) {
+    //         drawFortuneTellingC()
+    //     }
+    // }
 }
 
 /**
@@ -208,8 +223,8 @@ function drawMenuCrystalBall(menuCrystalBall) {
 
     // When you move the mouse around the ball,
     // the ball's colour changes, *ooOoooUuU*.
-    let r = map(mouseX, 100, 600, 100, 600);
-    let b = map(mouseX, 100, 600, 600, 100);
+    let r = map(mouseX, 200, 500, 200, 500);
+    let b = map(mouseX, 200, 500, 500, 200);
 
     // Style the ball.
     fill(r, 0, b);
@@ -237,14 +252,7 @@ function drawFortuneTellingC() {
     drawCrystalBallC();
     drawHand();
 }
-//function mouseClicked() {
-// We will indicate where we want the mouse to be when we click (over ball).
-//   const distance = dist(mouseX, mouseY, menuCrystalBall.x, menuCrystalBall.y);
-//   const mouseInsideMenuCrystalBall = (distance < menuCrystalBall.size / 2);
 
-//  if (mouseInsideMenuCrystalBall)
-//      fortuneTellingExperienceA()
-//}
 
 /**
  * Draws our dark room.
@@ -307,47 +315,66 @@ let fortuneARead = false;
  * I mean a tap of the hand!).
  */
 function mouseClicked() {
-    // We will indicate where we want the mouse to be when we click (over ball).
-    const distance = dist(mouseX, mouseY, crystalBallA.x, crystalBallA.y);
-    const mouseInsideCrystalBallA = (distance < crystalBallA.size / 2);
+    console.log("mouseClicked")
 
-    // The fortune will only be unveiled unless the mouse is clicked
-    // inside the circle. Once it clicks, the fotune will not regenerate
-    // until you refresh the page.
-    if (!fortuneARead && mouseInsideCrystalBallA) {
-        // Getting a random number to set up 
-        // the probability for our fortunes.
-        const p = random();
-        // Choosing different fortunes at different
-        // probabilities. This part of the code was
-        // borrowed from Pippin's "random() and
-        // probability" example.
+    const distanceMenu = dist(mouseX, mouseY, menuCrystalBalls[0].x, menuCrystalBalls[0].y);
+    const mouseInsideMenuCrystalBalls = (distanceMenu < menuCrystalBalls[0].size);
 
-        // 1% of the time!
-        if (p < 0.01) {
-            fortuneA = "A gnome will give you stock tips.";
+    if (mouseInsideMenuCrystalBalls === true) {
+        crystalBallState = "A"
+    }
+
+    const distanceMenuB = dist(mouseX, mouseY, menuCrystalBalls[1].x, menuCrystalBalls[1].y);
+    const mouseInsideMenuCrystalBallsB = (distanceMenuB < menuCrystalBalls[1].size);
+
+    if (mouseInsideMenuCrystalBallsB === true) {
+        crystalBallState = "B"
+    }
+
+    if (crystalBallState === "A" || crystalBallState === "B" || crystalBallState === "C" || crystalBallState === "D") {
+        // We will indicate where we want the mouse to be when we click (over ball).
+        const distance = dist(mouseX, mouseY, crystalBallA.x, crystalBallA.y);
+        const mouseInsideCrystalBallA = (distance < crystalBallA.size / 2);
+
+
+        // The fortune will only be unveiled unless the mouse is clicked
+        // inside the circle. Once it clicks, the fotune will not regenerate
+        // until you refresh the page.
+        if (!fortuneARead && mouseInsideCrystalBallA) {
+            // Getting a random number to set up 
+            // the probability for our fortunes.
+            const p = random();
+            // Choosing different fortunes at different
+            // probabilities. This part of the code was
+            // borrowed from Pippin's "random() and
+            // probability" example.
+
+            // 1% of the time!
+            if (p < 0.01) {
+                fortuneA = "A gnome will give you stock tips.";
+            }
+            // Between 0.01 and 0.11 means this one is 10% of the time
+            else if (p < 0.11) {
+                fortuneA = "Your next pet will be a wisecracking cactus.";
+            }
+            // Between 0.11 and 0.26 means this one is 15% of the time
+            else if (p < 0.26) {
+                fortuneA = "You will lose your left sock. Eventually."
+            }
+            // Between 0.26 and 0.31 means this one is 5% of the time
+            else if (p < 0.31) {
+                fortuneA = "A llama will offer you life advice, but only in riddles."
+            }
+            // Between 0.31 and 0.61 means this one is 30% of the time
+            else if (p < 0.61) {
+                fortuneA = "You may or may not be tempted to eat a tire."
+            }
+            // Between 0.61 and 1.0 means this one is 39% of the time
+            else {
+                fortuneA = "Get lost, chump. I ain't feelin' it today."
+            }
+            fortuneARead = true;
         }
-        // Between 0.01 and 0.11 means this one is 10% of the time
-        else if (p < 0.11) {
-            fortuneA = "Your next pet will be a wisecracking cactus.";
-        }
-        // Between 0.11 and 0.26 means this one is 15% of the time
-        else if (p < 0.26) {
-            fortuneA = "You will lose your left sock. Eventually."
-        }
-        // Between 0.26 and 0.31 means this one is 5% of the time
-        else if (p < 0.31) {
-            fortuneA = "A llama will offer you life advice, but only in riddles."
-        }
-        // Between 0.31 and 0.61 means this one is 30% of the time
-        else if (p < 0.61) {
-            fortuneA = "You may or may not be tempted to eat a tire."
-        }
-        // Between 0.61 and 1.0 means this one is 39% of the time
-        else {
-            fortuneA = "Get lost, chump. I ain't feelin' it today."
-        }
-        fortuneARead = true;
     }
 }
 
@@ -439,6 +466,8 @@ function drawBallB(crystalBallB) {
 
     // Style the ball.
     fill(r, 0, b);
+    crystalBallB.angle += 0.1
+    crystalBallB.y = sin(crystalBallB.angle) * crystalBallB.floatiness + crystalBallB.originalY
     ellipse(crystalBallB.x, crystalBallB.y, crystalBallB.size);
     pop();
 }
