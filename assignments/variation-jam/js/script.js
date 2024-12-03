@@ -22,33 +22,45 @@
 
 "use strict";
 
+let drawDigit = false
+
+let randomList = []
+
 let crystalBallState = undefined
 
 // Menu crystal balls so you can choose your adventure - or fortune telling experience rather.
 let menuCrystalBalls = [
     {
         x: 150,
+        originalY: 450,
         y: 450,
         size: 100,
-        floatiness: 5
+        floatiness: 4,
+        angle: 0.3
     },
     {
         x: 240,
+        originalY: 600,
         y: 600,
         size: 100,
-        floatiness: 5
+        floatiness: 6,
+        angle: 0.1
     },
     {
         x: 460,
+        originalY: 600,
         y: 600,
         size: 100,
-        floatiness: 5
+        floatiness: 6,
+        angle: 0.5
     },
     {
         x: 550,
+        originalY: 450,
         y: 450,
         size: 100,
-        floatiness: 5
+        floatiness: 4,
+        angle: 0.8
     }
 ];
 
@@ -68,8 +80,8 @@ let crystalBallBs = [
         x: 150,
         originalY: 250,
         y: 250,
-        size: 100,
-        floatiness: 4,
+        size: 110,
+        floatiness: 6,
         angle: 0
 
     },
@@ -77,8 +89,8 @@ let crystalBallBs = [
         x: 550,
         originalY: 250,
         y: 250,
-        size: 100,
-        floatiness: 4,
+        size: 110,
+        floatiness: 6,
         angle: 0
     },
     {
@@ -153,12 +165,6 @@ function preload() {
     stoolImage = loadImage('assets/images/stool.png');
 }
 
-// Keys we will use to separate variations.
-const keys = {
-    fortuneTellingA: 65,
-    fortuneTellingB: 66,
-    fortuneTellingC: 67
-}
 
 
 /**
@@ -168,33 +174,26 @@ function setup() {
     createCanvas(700, 800);
     // Removing cursor from our sight so we only see our delicate hand.
     noCursor();
+    generateRandomNumbers(); // Will be there for fortune telling C
 }
 
 /**
  * Creates the mystical ambiance with a dark background 
  * and draws the magical crystal ball so it really stands out.
- * We also have a hand now so we can *touch* the bal!!
+ * We also have a hand now so we can *touch* the ball!!
 */
 function draw() {
     drawTitleCard();
     drawHand();
-    if (crystalBallState == "A") {
+    if (crystalBallState === "A") {
         drawFortuneTellingA()
     }
     else if (crystalBallState == "B") {
         drawFortuneTellingB()
     }
-    // if (keyIsPressed) {
-    //     if (keyCode === keys.fortuneTellingA) {
-    //         drawFortuneTellingA()
-    //     }
-    //     else if (keyCode === keys.fortuneTellingB) {
-    //         drawFortuneTellingB()
-    //     }
-    //     else if (keyCode === keys.fortuneTellingC) {
-    //         drawFortuneTellingC()
-    //     }
-    // }
+    else if (crystalBallState === "C") {
+        drawFortuneTellingC()
+    }
 }
 
 /**
@@ -228,6 +227,8 @@ function drawMenuCrystalBall(menuCrystalBall) {
 
     // Style the ball.
     fill(r, 0, b);
+    menuCrystalBall.angle += 0.1
+    menuCrystalBall.y = sin(menuCrystalBall.angle) * menuCrystalBall.floatiness + menuCrystalBall.originalY
     ellipse(menuCrystalBall.x, menuCrystalBall.y, menuCrystalBall.size);
     pop();
 }
@@ -251,6 +252,8 @@ function drawFortuneTellingC() {
     drawStool();
     drawCrystalBallC();
     drawHand();
+
+
 }
 
 
@@ -293,8 +296,11 @@ function drawCrystalBallB() {
 }
 
 function drawCrystalBallC() {
+    let index = 0;
     for (let crystalBallC of crystalBallCs) {
-        drawBallC(crystalBallC)
+
+        drawBallC(crystalBallC, randomList[index]);  // keeps generating number for each ball
+        index++;
     }
 }
 
@@ -319,19 +325,28 @@ function mouseClicked() {
 
     const distanceMenu = dist(mouseX, mouseY, menuCrystalBalls[0].x, menuCrystalBalls[0].y);
     const mouseInsideMenuCrystalBalls = (distanceMenu < menuCrystalBalls[0].size);
+    const distanceMenuB = dist(mouseX, mouseY, menuCrystalBalls[1].x, menuCrystalBalls[1].y);
+    const mouseInsideMenuCrystalBallsB = (distanceMenuB < menuCrystalBalls[1].size);
+    const distanceMenuC = dist(mouseX, mouseY, menuCrystalBalls[2].x, menuCrystalBalls[2].y);
+    const mouseInsideMenuCrystalBallsC = (distanceMenuC < menuCrystalBalls[2].size);
 
     if (mouseInsideMenuCrystalBalls === true) {
         crystalBallState = "A"
     }
 
-    const distanceMenuB = dist(mouseX, mouseY, menuCrystalBalls[1].x, menuCrystalBalls[1].y);
-    const mouseInsideMenuCrystalBallsB = (distanceMenuB < menuCrystalBalls[1].size);
 
-    if (mouseInsideMenuCrystalBallsB === true) {
+
+    else if (mouseInsideMenuCrystalBallsB === true) {
         crystalBallState = "B"
     }
 
-    if (crystalBallState === "A" || crystalBallState === "B" || crystalBallState === "C" || crystalBallState === "D") {
+
+
+    else if (mouseInsideMenuCrystalBallsC === true) {
+        crystalBallState = "C"
+    }
+
+    else if (crystalBallState === "A") {
         // We will indicate where we want the mouse to be when we click (over ball).
         const distance = dist(mouseX, mouseY, crystalBallA.x, crystalBallA.y);
         const mouseInsideCrystalBallA = (distance < crystalBallA.size / 2);
@@ -376,21 +391,25 @@ function mouseClicked() {
             fortuneARead = true;
         }
     }
+    else if (crystalBallState === "C") {
+        console.log("test")
+        drawDigit = true;
+    }
 }
 
 /**
  * Makes the ball shake when you hover your hand on it and rub it! *needs work*
  */
-//function mouseMoved() {
-//We will indicate where we want the to be when we click (inside ball)
-// const distance = dist(mouseX, mouseY, crystalBall.x, crystalBall.y);
-// const mouseInsideCrystalBall = (distance < crystalBall.size / 2);
-
-// if (mouseInsideCrystalBall) {
-///  const x = crystalBall.x + random(-200, 200);
-// const y = crystalBall.y + random(-200, 200);
-// }
-//}
+function mouseMoved() {
+    //We will indicate where we want the to be when we click (inside ball)
+    const distance = dist(mouseX, mouseY, crystalBallA.x, crystalBallA.y);
+    const mouseInsideCrystalBallA = (distance < crystalBallA.size / 2);
+    console.log(mouseInsideCrystalBallA)
+    if (mouseInsideCrystalBallA) {
+        crystalBallA.x = crystalBallA.x + random(-5, 5);
+        //crystalBallA.y = crystalBallA.y + random(-20, 0);
+    }
+}
 
 /**
  * Draws our mesmerizing ball only 
@@ -472,7 +491,7 @@ function drawBallB(crystalBallB) {
     pop();
 }
 
-function drawBallC(crystalBallC) {
+function drawBallC(crystalBallC, randomDigit) {
     push();
     noStroke();
 
@@ -484,5 +503,24 @@ function drawBallC(crystalBallC) {
     // Style the ball.
     fill(r, 0, b);
     ellipse(crystalBallC.x, crystalBallC.y, crystalBallC.size);
+    if (drawDigit === true) {
+        fill('white')
+        text(randomDigit, crystalBallC.x, crystalBallC.y)
+    }
+
     pop();
+}
+
+function generateRandomNumbers() {
+    let count = 0;
+    while (count < 7) {
+        let randomNumber = Math.floor(random(0, 51)); // first generate random number
+        if (randomList.includes(randomNumber) === false) { // check if random number is already in list
+            randomList.push(randomNumber) // if not, add it to list
+            count = count + 1 // incrementing count
+        }
+
+    }
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+
 }
