@@ -22,6 +22,16 @@
 
 "use strict";
 
+let fortuneAImage = undefined;
+
+let animateShakingFinger = false;
+
+let direction = "right";
+
+let rotateFinger = 0;
+
+let drawTextBoolean = false;
+
 let drawFortuneBLucky = false;
 
 let drawFortuneBUnlucky = false;
@@ -32,7 +42,7 @@ let drawDigit = false
 
 let randomList = []
 
-let crystalBallState = undefined
+let crystalBallState = "M"
 
 // Menu crystal balls so you can choose your adventure - or fortune telling experience rather.
 let menuCrystalBalls = [
@@ -155,7 +165,7 @@ let crystalBallCs = [
     }
 ]
 
-// Our lovely ball A.
+// Our lovely ball D.
 let crystalBallD = {
     //Position
     x: 350,
@@ -169,23 +179,47 @@ var r = 0;
 var b = 650;
 
 // Setting up our image variables.
+// These will be used for all experiences.
 let curtainImage = undefined;
 let handImage = undefined;
 let stoolImage = undefined;
+
+// These will be used in experience A.
+let wisecrackingCactusImage = undefined;
+let eatenTireImage = undefined;
+let cigarHandImage = undefined;
+
+// This will be used in experience D.
+let shakingFingerImage = undefined;
+
+// These will be used in experience B.
 let slotImgs = [];
 
+// Defining variables for experience B: the Slot Machine Luck tester.
 let slotSpeed = 10; // 
 let slot1, slot2, slot3; // 
 let isSpinning = false; // 
 
 
+/**
+ * We must magically load all our apparitions, visual fortunes and furnishings!
+ */
 
-// Loading our hand, curtain and stool images into the program.
 function preload() {
+    // Loading our hand, curtain and stool images into the program.
     curtainImage = loadImage('assets/images/redcurtains.png');
     handImage = loadImage('assets/images/ladyhand.png');
     stoolImage = loadImage('assets/images/stool.png');
 
+    //Loading our fortune apparitions in experience A.
+    wisecrackingCactusImage = loadImage('assets/images/apparitions/wisecrackingcactus.png')
+    eatenTireImage = loadImage('assets/images/apparitions/eatentire.png')
+    cigarHandImage = loadImage('assets/images/apparitions/cigarhand.png')
+
+    //Loading our floating shaking hand in experience D.
+    shakingFingerImage = loadImage('assets/images/apparitions/shakinghand.png')
+
+    // Loading 
     for (let i = 1; i <= 8; i++) {
         slotImgs.push(loadImage('assets/images/charms/slot_' + i + '.png'));
     }
@@ -210,7 +244,10 @@ function setup() {
  * We also have a hand now so we can *touch* the ball!!
 */
 function draw() {
-    drawTitleCard();
+    if (crystalBallState === "M") {
+        drawTitleCard();
+    }
+
     drawHand();
     if (crystalBallState === "A") {
         drawFortuneTellingA()
@@ -282,6 +319,7 @@ function drawFortuneTellingC() {
     drawStool();
     drawCrystalBallC();
     drawHand();
+    drawTextC();
 }
 
 function drawFortuneTellingD() {
@@ -289,6 +327,7 @@ function drawFortuneTellingD() {
     drawStool();
     drawCrystalBallD();
     drawHand();
+    drawShakingFinger();
 }
 
 
@@ -345,6 +384,47 @@ function drawCrystalBallD() {
     drawBallD();
 }
 
+function drawShakingFinger() {
+
+    // push();
+
+    // translate(crystalBallD.x, (crystalBallD.y))
+    // rotate(0)
+
+    // image(shakingFingerImage, 0, -100)
+    // pop();
+    // push();
+    // translate(crystalBallD.x, (crystalBallD.y))
+    // rotate(QUARTER_PI)
+    // rotateFinger += 0.005
+    // image(shakingFingerImage, 0, -100)
+    // ellipse(0, 0, 10, 10)
+
+    // pop();
+    if (animateShakingFinger === true) {
+        if (direction === "right") {
+            if (rotateFinger < 0.5) {
+                push();
+                translate(crystalBallD.x, (crystalBallD.y))
+                rotate(rotateFinger)
+                rotateFinger += 0.01
+                image(shakingFingerImage, 0, -200)
+                pop();
+            } else { direction = "left" }
+        }
+        if (direction === "left") {
+            if (rotateFinger >= -0.5) {
+                push();
+                translate(crystalBallD.x, (crystalBallD.y))
+                rotate(rotateFinger)
+                rotateFinger -= 0.01
+                image(shakingFingerImage, 0, -200)
+                pop();
+            } else { direction = "right" }
+        }
+    }
+}
+
 /**
  * Draws our hand so we can rub the Crystal Ball!
  */
@@ -363,37 +443,38 @@ let fortuneARead = false;
  */
 function mouseClicked() {
     console.log("mouseClicked")
+    if (crystalBallState === "M") {
 
-    const distanceMenu = dist(mouseX, mouseY, menuCrystalBalls[0].x, menuCrystalBalls[0].y);
-    const mouseInsideMenuCrystalBalls = (distanceMenu < menuCrystalBalls[0].size);
-    const distanceMenuB = dist(mouseX, mouseY, menuCrystalBalls[1].x, menuCrystalBalls[1].y);
-    const mouseInsideMenuCrystalBallsB = (distanceMenuB < menuCrystalBalls[1].size);
-    const distanceMenuC = dist(mouseX, mouseY, menuCrystalBalls[2].x, menuCrystalBalls[2].y);
-    const mouseInsideMenuCrystalBallsC = (distanceMenuC < menuCrystalBalls[2].size);
-    const distanceMenuD = dist(mouseX, mouseY, menuCrystalBalls[3].x, menuCrystalBalls[3].y);
-    const mouseInsideMenuCrystalBallsD = (distanceMenuD < menuCrystalBalls[3].size);
+        const distanceMenu = dist(mouseX, mouseY, menuCrystalBalls[0].x, menuCrystalBalls[0].y);
+        const mouseInsideMenuCrystalBalls = (distanceMenu < menuCrystalBalls[0].size);
+        const distanceMenuB = dist(mouseX, mouseY, menuCrystalBalls[1].x, menuCrystalBalls[1].y);
+        const mouseInsideMenuCrystalBallsB = (distanceMenuB < menuCrystalBalls[1].size);
+        const distanceMenuC = dist(mouseX, mouseY, menuCrystalBalls[2].x, menuCrystalBalls[2].y);
+        const mouseInsideMenuCrystalBallsC = (distanceMenuC < menuCrystalBalls[2].size);
+        const distanceMenuD = dist(mouseX, mouseY, menuCrystalBalls[3].x, menuCrystalBalls[3].y);
+        const mouseInsideMenuCrystalBallsD = (distanceMenuD < menuCrystalBalls[3].size);
 
 
-    if (mouseInsideMenuCrystalBalls === true) {
-        crystalBallState = "A"
+        if (mouseInsideMenuCrystalBalls === true) {
+            crystalBallState = "A"
+        }
+
+
+
+        else if (mouseInsideMenuCrystalBallsB === true) {
+            crystalBallState = "B"
+        }
+
+
+
+        else if (mouseInsideMenuCrystalBallsC === true) {
+            crystalBallState = "C"
+        }
+
+        else if (mouseInsideMenuCrystalBallsD === true) {
+            crystalBallState = "D"
+        }
     }
-
-
-
-    else if (mouseInsideMenuCrystalBallsB === true) {
-        crystalBallState = "B"
-    }
-
-
-
-    else if (mouseInsideMenuCrystalBallsC === true) {
-        crystalBallState = "C"
-    }
-
-    else if (mouseInsideMenuCrystalBallsD === true) {
-        crystalBallState = "D"
-    }
-
 
     else if (crystalBallState === "A") {
         // We will indicate where we want the mouse to be when we click (over ball).
@@ -416,28 +497,35 @@ function mouseClicked() {
             // 1% of the time!
             if (p < 0.01) {
                 fortuneA = "A gnome will give you stock tips.";
+                fortuneAImage = wisecrackingCactusImage
             }
             // Between 0.01 and 0.11 means this one is 10% of the time
             else if (p < 0.11) {
                 fortuneA = "Your next pet will be a wisecracking cactus.";
+                fortuneAImage = wisecrackingCactusImage
             }
             // Between 0.11 and 0.26 means this one is 15% of the time
             else if (p < 0.26) {
                 fortuneA = "You will lose your left sock. Eventually."
+                fortuneAImage = wisecrackingCactusImage
             }
             // Between 0.26 and 0.31 means this one is 5% of the time
             else if (p < 0.31) {
                 fortuneA = "A llama will offer you life advice, but only in riddles."
+                fortuneAImage = wisecrackingCactusImage
             }
             // Between 0.31 and 0.61 means this one is 30% of the time
             else if (p < 0.61) {
                 fortuneA = "You may or may not be tempted to eat a tire."
+                fortuneAImage = eatenTireImage
             }
             // Between 0.61 and 1.0 means this one is 39% of the time
             else {
                 fortuneA = "Get lost, chump. I ain't feelin' it today."
+                fortuneAImage = cigarHandImage
             }
             fortuneARead = true;
+            console.log(wisecrackingCactusImage)
         }
     }
     else if (crystalBallState === "B") {
@@ -458,6 +546,15 @@ function mouseClicked() {
         console.log(mouseInsideCrystalBallC)
         if (mouseInsideCrystalBallC) {
             drawDigit = true;
+            drawTextBoolean = true;
+        }
+    }
+
+    else if (crystalBallState === "D") {
+        const distance = dist(mouseX, mouseY, crystalBallD.x, crystalBallD.y);
+        const mouseInsideCrystalBallD = (distance < crystalBallD.size);
+        if (mouseInsideCrystalBallD) {
+            animateShakingFinger = true;
         }
     }
 }
@@ -534,6 +631,10 @@ function drawFortuneA() {
     textSize(13);
     fill('white')
     text(fortuneA, 350, 355);
+    if (fortuneAImage !== undefined) {
+        image(fortuneAImage, 50, 50)
+    }
+
     pop();
 }
 
@@ -541,7 +642,6 @@ function drawFortuneA() {
 function drawBallB(crystalBallB, index, isLargeBallB) {
     push();
     noStroke();
-
     // When you move the mouse around the ball,
     // the ball's colour changes, *ooOoooUuU*.
     let r = map(mouseX, 100, 600, 100, 600);
@@ -574,7 +674,6 @@ function drawBallB(crystalBallB, index, isLargeBallB) {
         fill('white')
         text("Do not test your luck today - results are negative.", crystalBallB.x, (crystalBallB.y + 60))
     }
-
     pop();
 }
 
@@ -601,8 +700,18 @@ function drawBallC(crystalBallC, randomDigit) {
     pop();
 }
 
-function drawBallD() {
+function drawTextC() {
+    if (drawTextBoolean === true) {
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(20);
+        fill('white')
+        text("Now you better win!!!", 350, 350)
+    }
 
+}
+
+function drawBallD() {
     push();
     // When you move the mouse around the ball,
     // the ball's colour changes, *ooOoooUuU*.
