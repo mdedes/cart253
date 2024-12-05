@@ -22,6 +22,8 @@
 
 "use strict";
 
+let drawText = false;
+
 let drawDigit = false
 
 let randomList = []
@@ -157,12 +159,26 @@ var b = 650;
 let curtainImage = undefined;
 let handImage = undefined;
 let stoolImage = undefined;
+let slotImgs = [];
+
+let slotSpeed = 10; // 
+let slot1, slot2, slot3; // 
+let isSpinning = false; // 
+
+
 
 // Loading our hand, curtain and stool images into the program.
 function preload() {
     curtainImage = loadImage('assets/images/redcurtains.png');
     handImage = loadImage('assets/images/ladyhand.png');
     stoolImage = loadImage('assets/images/stool.png');
+    slotImgs.push(loadImage('assets/images/images/nine.png'))
+    slotImgs.push(loadImage('assets/images/images/one.png'))
+    slotImgs.push(loadImage('assets/images/images/seven.png'))
+    slotImgs.push(loadImage('assets/images/images/seventeen.png'))
+    slotImgs.push(loadImage('assets/images/images/ten.png'))
+    slotImgs.push(loadImage('assets/images/images/thirteen.png'))
+
 }
 
 
@@ -175,6 +191,7 @@ function setup() {
     // Removing cursor from our sight so we only see our delicate hand.
     noCursor();
     generateRandomNumbers(); // Will be there for fortune telling C
+    generateRandomSlots();
 }
 
 /**
@@ -188,7 +205,7 @@ function draw() {
     if (crystalBallState === "A") {
         drawFortuneTellingA()
     }
-    else if (crystalBallState == "B") {
+    else if (crystalBallState === "B") {
         drawFortuneTellingB()
     }
     else if (crystalBallState === "C") {
@@ -287,9 +304,11 @@ function drawCrystalBallA() {
 }
 
 function drawCrystalBallB() {
-    //drawFortuneA()
-    for (let crystalBallB of crystalBallBs) {
-        drawBallB(crystalBallB);
+    drawBallB(crystalBallBs[0], slot1, false)
+    drawBallB(crystalBallBs[1], slot2, false)
+    drawBallB(crystalBallBs[2], slot3, true)
+    if (isSpinning) {
+        spinSlots();
     }
     drawLeftFrontLegA();
     drawRightFrontLegA();
@@ -391,12 +410,25 @@ function mouseClicked() {
             fortuneARead = true;
         }
     }
+    else if (crystalBallState === "B") {
+        const distance = dist(mouseX, mouseY, crystalBallBs[2].x, crystalBallBs[2].y);
+        const mouseInsideCrystalBallB = (distance < crystalBallBs[2].size / 2);
+        //console.log(mouseInsideCrystalBallB)
+        if (mouseInsideCrystalBallB) {
+            isSpinning = true;
+            slotSpeed = 10;
+            drawText = false;
+        }
+    }
     else if (crystalBallState === "C") {
-        console.log("test")
-        drawDigit = true;
+        const distance = dist(mouseX, mouseY, crystalBallCs[3].x, crystalBallCs[3].y);
+        const mouseInsideCrystalBallC = (distance < crystalBallCs[3].size);
+        console.log(mouseInsideCrystalBallC)
+        if (mouseInsideCrystalBallC) {
+            drawDigit = true;
+        }
     }
 }
-
 /**
  * Makes the ball shake when you hover your hand on it and rub it! *needs work*
  */
@@ -405,9 +437,9 @@ function mouseMoved() {
     const distance = dist(mouseX, mouseY, crystalBallA.x, crystalBallA.y);
     const mouseInsideCrystalBallA = (distance < crystalBallA.size / 2);
     console.log(mouseInsideCrystalBallA)
-    if (mouseInsideCrystalBallA) {
-        crystalBallA.x = crystalBallA.x + random(-5, 5);
-        //crystalBallA.y = crystalBallA.y + random(-20, 0);
+    if (mouseInsideCrystalBallA && !fortuneARead) {
+        crystalBallA.x = crystalBallA.x + random(-0.3, 0.3);
+        crystalBallA.y = crystalBallA.y + random(-0.3, 0.3);
     }
 }
 
@@ -474,7 +506,7 @@ function drawFortuneA() {
 }
 
 
-function drawBallB(crystalBallB) {
+function drawBallB(crystalBallB, index, isLargeBallB) {
     push();
     noStroke();
 
@@ -488,6 +520,15 @@ function drawBallB(crystalBallB) {
     crystalBallB.angle += 0.1
     crystalBallB.y = sin(crystalBallB.angle) * crystalBallB.floatiness + crystalBallB.originalY
     ellipse(crystalBallB.x, crystalBallB.y, crystalBallB.size);
+    image(slotImgs[index], crystalBallB.x, crystalBallB.y, 80, 80);
+    if (drawText === true && isLargeBallB === true) {
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(16);
+        fill('white')
+        text("You *just* might be lucky!", crystalBallB.x, (crystalBallB.y + 40))
+    }
+
     pop();
 }
 
@@ -504,6 +545,9 @@ function drawBallC(crystalBallC, randomDigit) {
     fill(r, 0, b);
     ellipse(crystalBallC.x, crystalBallC.y, crystalBallC.size);
     if (drawDigit === true) {
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(16);
         fill('white')
         text(randomDigit, crystalBallC.x, crystalBallC.y)
     }
@@ -523,4 +567,31 @@ function generateRandomNumbers() {
     }
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
 
+}
+
+function generateRandomSlots() {
+    slot1 = floor(random(slotImgs.length));
+    slot2 = floor(random(slotImgs.length));
+    slot3 = floor(random(slotImgs.length));
+}
+
+function spinSlots() {
+    if (slotSpeed > 0) {
+        slotSpeed -= 0.1;
+    } else {
+        if (slotSpeed < 0) {
+            slotSpeed = 0;
+        }
+        if (slotSpeed === 0) {
+            if (slot1 === slot2 && slot2 === slot3 || slot1 !== slot2 && slot2 !== slot3) {
+                drawText = true
+                console.log(slot1 === slot2 && slot2 === slot3 || slot1 !== slot2 && slot2 !== slot3)
+            }
+            isSpinning = false;
+        }
+    }
+    // 
+    slot1 = (slot1 + 1) % slotImgs.length;
+    slot2 = (slot2 + 1) % slotImgs.length;
+    slot3 = (slot3 + 1) % slotImgs.length;
 }
