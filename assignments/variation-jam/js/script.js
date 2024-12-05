@@ -22,7 +22,11 @@
 
 "use strict";
 
-let drawText = false;
+let drawFortuneBLucky = false;
+
+let drawFortuneBUnlucky = false;
+
+let drawFortuneBLuckyish = false;
 
 let drawDigit = false
 
@@ -172,12 +176,11 @@ function preload() {
     curtainImage = loadImage('assets/images/redcurtains.png');
     handImage = loadImage('assets/images/ladyhand.png');
     stoolImage = loadImage('assets/images/stool.png');
-    slotImgs.push(loadImage('assets/images/images/nine.png'))
-    slotImgs.push(loadImage('assets/images/images/one.png'))
-    slotImgs.push(loadImage('assets/images/images/seven.png'))
-    slotImgs.push(loadImage('assets/images/images/seventeen.png'))
-    slotImgs.push(loadImage('assets/images/images/ten.png'))
-    slotImgs.push(loadImage('assets/images/images/thirteen.png'))
+
+    for (let i = 1; i <= 8; i++) {
+        slotImgs.push(loadImage('assets/images/charms/slot_' + i + '.png'));
+    }
+
 
 }
 
@@ -417,7 +420,9 @@ function mouseClicked() {
         if (mouseInsideCrystalBallB) {
             isSpinning = true;
             slotSpeed = 10;
-            drawText = false;
+            drawFortuneBLucky = false;
+            drawFortuneBLuckyish = false;
+            drawFortuneBUnlucky = false;
         }
     }
     else if (crystalBallState === "C") {
@@ -430,7 +435,7 @@ function mouseClicked() {
     }
 }
 /**
- * Makes the ball shake when you hover your hand on it and rub it! *needs work*
+ * Makes the ball shake when you hover your hand on it and rub it! 
  */
 function mouseMoved() {
     //We will indicate where we want the to be when we click (inside ball)
@@ -520,13 +525,27 @@ function drawBallB(crystalBallB, index, isLargeBallB) {
     crystalBallB.angle += 0.1
     crystalBallB.y = sin(crystalBallB.angle) * crystalBallB.floatiness + crystalBallB.originalY
     ellipse(crystalBallB.x, crystalBallB.y, crystalBallB.size);
-    image(slotImgs[index], crystalBallB.x, crystalBallB.y, 80, 80);
-    if (drawText === true && isLargeBallB === true) {
+    image(slotImgs[index], (crystalBallB.x - 40), (crystalBallB.y - 40), 80, 80);
+    if (drawFortuneBLucky === true && isLargeBallB === true) {
         textAlign(CENTER, CENTER);
         textStyle(BOLDITALIC);
         textSize(16);
         fill('white')
-        text("You *just* might be lucky!", crystalBallB.x, (crystalBallB.y + 40))
+        text("You *just* might be lucky!", crystalBallB.x, (crystalBallB.y + 60))
+    }
+    else if (drawFortuneBLuckyish === true && isLargeBallB === true) {
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(16);
+        fill('white')
+        text("Doesn't cut it. Not that lucky.", crystalBallB.x, (crystalBallB.y + 60))
+    }
+    else if (drawFortuneBUnlucky === true && isLargeBallB === true) {
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(10);
+        fill('white')
+        text("Do not test your luck today - results are negative.", crystalBallB.x, (crystalBallB.y + 60))
     }
 
     pop();
@@ -583,9 +602,14 @@ function spinSlots() {
             slotSpeed = 0;
         }
         if (slotSpeed === 0) {
-            if (slot1 === slot2 && slot2 === slot3 || slot1 !== slot2 && slot2 !== slot3) {
-                drawText = true
-                console.log(slot1 === slot2 && slot2 === slot3 || slot1 !== slot2 && slot2 !== slot3)
+            if (slot1 === slot2 && slot2 === slot3) {
+                drawFortuneBLucky = true
+            }
+            else if (slot1 !== slot2 && slot2 === slot3 || slot1 === slot2 && slot2 !== slot3 || slot1 === slot3 && slot3 !== slot2) {
+                drawFortuneBLuckyish = true
+            }
+            else if (slot1 !== slot2 && slot2 !== slot3) {
+                drawFortuneBUnlucky = true
             }
             isSpinning = false;
         }
