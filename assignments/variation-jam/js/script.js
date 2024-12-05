@@ -155,6 +155,15 @@ let crystalBallCs = [
     }
 ]
 
+// Our lovely ball A.
+let crystalBallD = {
+    //Position
+    x: 350,
+    y: 355,
+    // Size
+    size: 320
+}
+
 // Defining r and b (rgb) variables for our balls.
 var r = 0;
 var b = 650;
@@ -180,8 +189,6 @@ function preload() {
     for (let i = 1; i <= 8; i++) {
         slotImgs.push(loadImage('assets/images/charms/slot_' + i + '.png'));
     }
-
-
 }
 
 
@@ -213,6 +220,9 @@ function draw() {
     }
     else if (crystalBallState === "C") {
         drawFortuneTellingC()
+    }
+    else if (crystalBallState === "D") {
+        drawFortuneTellingD()
     }
 }
 
@@ -272,8 +282,13 @@ function drawFortuneTellingC() {
     drawStool();
     drawCrystalBallC();
     drawHand();
+}
 
-
+function drawFortuneTellingD() {
+    drawRoom();
+    drawStool();
+    drawCrystalBallD();
+    drawHand();
 }
 
 
@@ -326,6 +341,10 @@ function drawCrystalBallC() {
     }
 }
 
+function drawCrystalBallD() {
+    drawBallD();
+}
+
 /**
  * Draws our hand so we can rub the Crystal Ball!
  */
@@ -351,6 +370,9 @@ function mouseClicked() {
     const mouseInsideMenuCrystalBallsB = (distanceMenuB < menuCrystalBalls[1].size);
     const distanceMenuC = dist(mouseX, mouseY, menuCrystalBalls[2].x, menuCrystalBalls[2].y);
     const mouseInsideMenuCrystalBallsC = (distanceMenuC < menuCrystalBalls[2].size);
+    const distanceMenuD = dist(mouseX, mouseY, menuCrystalBalls[3].x, menuCrystalBalls[3].y);
+    const mouseInsideMenuCrystalBallsD = (distanceMenuD < menuCrystalBalls[3].size);
+
 
     if (mouseInsideMenuCrystalBalls === true) {
         crystalBallState = "A"
@@ -367,6 +389,11 @@ function mouseClicked() {
     else if (mouseInsideMenuCrystalBallsC === true) {
         crystalBallState = "C"
     }
+
+    else if (mouseInsideMenuCrystalBallsD === true) {
+        crystalBallState = "D"
+    }
+
 
     else if (crystalBallState === "A") {
         // We will indicate where we want the mouse to be when we click (over ball).
@@ -571,6 +598,22 @@ function drawBallC(crystalBallC, randomDigit) {
         text(randomDigit, crystalBallC.x, crystalBallC.y)
     }
 
+    pop();
+}
+
+function drawBallD() {
+
+    push();
+    // When you move the mouse around the ball,
+    // the ball's colour changes, *ooOoooUuU*.
+    let r = map(mouseX, 0, 700, 0, 700);
+    let b = map(mouseX, 0, 700, 700, 0);
+
+    // Style the ball.
+    fill(r, 0, b);
+
+    // Draw the ball.
+    circle(crystalBallD.x, crystalBallD.y, crystalBallD.size);
     pop();
 }
 
