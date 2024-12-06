@@ -22,7 +22,19 @@
 
 "use strict";
 
-let fortuneAImage = undefined;
+let drawFortuneD = false;
+
+let fortuneALlamaImage = undefined;
+
+let fortuneASockImage = undefined;
+
+let fortuneAGnomeImage = undefined;
+
+let fortuneACactusImage = undefined;
+
+let fortuneACigarImage = undefined;
+
+let fortuneATireImage = undefined;
 
 let animateShakingFinger = false;
 
@@ -123,45 +135,59 @@ let crystalBallBs = [
 let crystalBallCs = [
     {
         x: 155,
+        originalY: 255,
         y: 255,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     },
     {
         x: 152,
+        originalY: 370,
         y: 370,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     },
     {
         x: 230,
+        originalY: 450,
         y: 450,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     },
     {
         x: 350,
+        originalY: 480,
         y: 480,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     },
     {
         x: 470,
+        originalY: 450,
         y: 450,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     },
     {
         x: 548,
+        originalY: 370,
         y: 370,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     },
     {
         x: 545,
+        originalY: 255,
         y: 255,
         size: 90,
-        floatiness: 0
+        floatiness: 5,
+        angle: 0
     }
 ]
 
@@ -169,9 +195,12 @@ let crystalBallCs = [
 let crystalBallD = {
     //Position
     x: 350,
-    y: 355,
+    originalY: 425,
+    y: 425,
     // Size
-    size: 320
+    size: 360,
+    floatiness: 8,
+    angle: 0
 }
 
 // Defining r and b (rgb) variables for our balls.
@@ -188,6 +217,9 @@ let stoolImage = undefined;
 let wisecrackingCactusImage = undefined;
 let eatenTireImage = undefined;
 let cigarHandImage = undefined;
+let gnomeImage = undefined;
+let sockImage = undefined;
+let smileyLlamaImage = undefined;
 
 // This will be used in experience D.
 let shakingFingerImage = undefined;
@@ -215,6 +247,10 @@ function preload() {
     wisecrackingCactusImage = loadImage('assets/images/apparitions/wisecrackingcactus.png')
     eatenTireImage = loadImage('assets/images/apparitions/eatentire.png')
     cigarHandImage = loadImage('assets/images/apparitions/cigarhand.png')
+    gnomeImage = loadImage('assets/images/apparitions/gnome.png')
+    sockImage = loadImage('assets/images/apparitions/sock.png')
+    smileyLlamaImage = loadImage('assets/images/apparitions/smileyllama.png')
+
 
     //Loading our floating shaking hand in experience D.
     shakingFingerImage = loadImage('assets/images/apparitions/shakinghand.png')
@@ -247,7 +283,6 @@ function draw() {
     if (crystalBallState === "M") {
         drawTitleCard();
     }
-
     drawHand();
     if (crystalBallState === "A") {
         drawFortuneTellingA()
@@ -273,9 +308,14 @@ function drawTitleCard() {
     push();
     textAlign(CENTER, CENTER);
     textStyle(BOLDITALIC);
-    textSize(13);
+    textSize(25);
     fill('white')
-    text("Welcome to your Fortune Telling. Click on a crystal ball to begin an experience.", 350, 255);
+    text("* WELCOME TO YOUR FORTUNE TELLING *", 350, 200);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(15);
+    fill('white')
+    text("Click on a crystal ball to begin an experience.", 350, 350);
     pop();
 
     for (let menuCrystalBall of menuCrystalBalls) {
@@ -305,6 +345,11 @@ function drawFortuneTellingA() {
     drawStool();
     drawCrystalBallA();
     drawHand();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(20);
+    fill('white')
+    text("'FORTUNE APPARITIONS' ", 350, 140)
 }
 
 function drawFortuneTellingB() {
@@ -312,22 +357,42 @@ function drawFortuneTellingB() {
     drawStool();
     drawCrystalBallB();
     drawHand();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(20);
+    fill('white')
+    text("'LUCK FORTUNE SLOT MACHINE' ", 350, 140)
 }
 
 function drawFortuneTellingC() {
     drawRoom();
     drawStool();
     drawCrystalBallC();
-    drawHand();
     drawTextC();
+    drawHand();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(20);
+    fill('white')
+    text("'POTENTIAL LOTTO MAX FORTUNE", 350, 130)
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(20);
+    fill('white')
+    text("NUMBER GENERATOR FORTUNE'", 350, 160)
 }
 
 function drawFortuneTellingD() {
     drawRoom();
-    drawStool();
     drawCrystalBallD();
-    drawHand();
     drawShakingFinger();
+    drawTextD();
+    drawHand();
+    textAlign(CENTER, CENTER);
+    textStyle(BOLDITALIC);
+    textSize(20);
+    fill('white')
+    text("'REALITY CHECK FORTUNE'", 350, 140)
 }
 
 
@@ -355,9 +420,9 @@ function drawStool() {
  */
 function drawCrystalBallA() {
     drawBallA();
-    drawFortuneA()
     drawLeftFrontLegA();
     drawRightFrontLegA();
+    drawFortuneA();
 }
 
 function drawCrystalBallB() {
@@ -385,27 +450,11 @@ function drawCrystalBallD() {
 }
 
 function drawShakingFinger() {
-
-    // push();
-
-    // translate(crystalBallD.x, (crystalBallD.y))
-    // rotate(0)
-
-    // image(shakingFingerImage, 0, -100)
-    // pop();
-    // push();
-    // translate(crystalBallD.x, (crystalBallD.y))
-    // rotate(QUARTER_PI)
-    // rotateFinger += 0.005
-    // image(shakingFingerImage, 0, -100)
-    // ellipse(0, 0, 10, 10)
-
-    // pop();
     if (animateShakingFinger === true) {
         if (direction === "right") {
-            if (rotateFinger < 0.5) {
+            if (rotateFinger < 0.25) {
                 push();
-                translate(crystalBallD.x, (crystalBallD.y))
+                translate((crystalBallD.x - 60), (crystalBallD.y + 50))
                 rotate(rotateFinger)
                 rotateFinger += 0.01
                 image(shakingFingerImage, 0, -200)
@@ -413,9 +462,9 @@ function drawShakingFinger() {
             } else { direction = "left" }
         }
         if (direction === "left") {
-            if (rotateFinger >= -0.5) {
+            if (rotateFinger >= -0.25) {
                 push();
-                translate(crystalBallD.x, (crystalBallD.y))
+                translate((crystalBallD.x - 60), (crystalBallD.y + 50))
                 rotate(rotateFinger)
                 rotateFinger -= 0.01
                 image(shakingFingerImage, 0, -200)
@@ -459,13 +508,9 @@ function mouseClicked() {
             crystalBallState = "A"
         }
 
-
-
         else if (mouseInsideMenuCrystalBallsB === true) {
             crystalBallState = "B"
         }
-
-
 
         else if (mouseInsideMenuCrystalBallsC === true) {
             crystalBallState = "C"
@@ -497,41 +542,39 @@ function mouseClicked() {
             // 1% of the time!
             if (p < 0.01) {
                 fortuneA = "A gnome will give you stock tips.";
-                fortuneAImage = wisecrackingCactusImage
+                fortuneAGnomeImage = gnomeImage
             }
             // Between 0.01 and 0.11 means this one is 10% of the time
             else if (p < 0.11) {
                 fortuneA = "Your next pet will be a wisecracking cactus.";
-                fortuneAImage = wisecrackingCactusImage
+                fortuneACactusImage = wisecrackingCactusImage
             }
             // Between 0.11 and 0.26 means this one is 15% of the time
             else if (p < 0.26) {
                 fortuneA = "You will lose your left sock. Eventually."
-                fortuneAImage = wisecrackingCactusImage
+                fortuneASockImage = sockImage
             }
             // Between 0.26 and 0.31 means this one is 5% of the time
             else if (p < 0.31) {
                 fortuneA = "A llama will offer you life advice, but only in riddles."
-                fortuneAImage = wisecrackingCactusImage
+                fortuneALlamaImage = smileyLlamaImage
             }
             // Between 0.31 and 0.61 means this one is 30% of the time
             else if (p < 0.61) {
-                fortuneA = "You may or may not be tempted to eat a tire."
-                fortuneAImage = eatenTireImage
+                fortuneA = "Your tire may or not get slighty eaten."
+                fortuneATireImage = eatenTireImage
             }
             // Between 0.61 and 1.0 means this one is 39% of the time
             else {
                 fortuneA = "Get lost, chump. I ain't feelin' it today."
-                fortuneAImage = cigarHandImage
+                fortuneACigarImage = cigarHandImage
             }
             fortuneARead = true;
-            console.log(wisecrackingCactusImage)
         }
     }
     else if (crystalBallState === "B") {
         const distance = dist(mouseX, mouseY, crystalBallBs[2].x, crystalBallBs[2].y);
         const mouseInsideCrystalBallB = (distance < crystalBallBs[2].size / 2);
-        //console.log(mouseInsideCrystalBallB)
         if (mouseInsideCrystalBallB) {
             isSpinning = true;
             slotSpeed = 10;
@@ -552,9 +595,10 @@ function mouseClicked() {
 
     else if (crystalBallState === "D") {
         const distance = dist(mouseX, mouseY, crystalBallD.x, crystalBallD.y);
-        const mouseInsideCrystalBallD = (distance < crystalBallD.size);
+        const mouseInsideCrystalBallD = (distance < crystalBallD.size / 2);
         if (mouseInsideCrystalBallD) {
             animateShakingFinger = true;
+            drawFortuneD = true;
         }
     }
 }
@@ -631,10 +675,36 @@ function drawFortuneA() {
     textSize(13);
     fill('white')
     text(fortuneA, 350, 355);
-    if (fortuneAImage !== undefined) {
-        image(fortuneAImage, 50, 50)
-    }
+    if (fortuneACactusImage !== undefined) {
+        image(fortuneACactusImage, 50, 125)
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(8);
+        fill('black')
+        text("You're lookin' sharp.", 250, 180)
 
+    } else if (fortuneACigarImage !== undefined) {
+        image(fortuneACigarImage, 450, 400)
+
+    } else if (fortuneATireImage !== undefined) {
+        image(fortuneATireImage, 60, 340)
+    } else if (fortuneAGnomeImage !== undefined) {
+        image(fortuneAGnomeImage, 456, 250)
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(5);
+        fill('black')
+        text("https://www.schwab.com/learn/story/", 626, 305)
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(5);
+        fill('black')
+        text("stock-investment-tips-beginners", 626, 310)
+    } else if (fortuneASockImage !== undefined) {
+        image(fortuneASockImage, 250, 180)
+    } else if (fortuneALlamaImage !== undefined) {
+        image(fortuneALlamaImage, 50, 350)
+    }
     pop();
 }
 
@@ -688,15 +758,16 @@ function drawBallC(crystalBallC, randomDigit) {
 
     // Style the ball.
     fill(r, 0, b);
+    crystalBallC.angle += 0.1
+    crystalBallC.y = sin(crystalBallC.angle) * crystalBallC.floatiness + crystalBallC.originalY
     ellipse(crystalBallC.x, crystalBallC.y, crystalBallC.size);
     if (drawDigit === true) {
         textAlign(CENTER, CENTER);
         textStyle(BOLDITALIC);
-        textSize(16);
+        textSize(25);
         fill('white')
         text(randomDigit, crystalBallC.x, crystalBallC.y)
     }
-
     pop();
 }
 
@@ -706,7 +777,7 @@ function drawTextC() {
         textStyle(BOLDITALIC);
         textSize(20);
         fill('white')
-        text("Now you better win!!!", 350, 350)
+        text("MAYBE *this* time???", 350, 330)
     }
 
 }
@@ -721,15 +792,33 @@ function drawBallD() {
     // Style the ball.
     fill(r, 0, b);
 
+    crystalBallD.angle += 0.05
+    crystalBallD.y = sin(crystalBallD.angle) * crystalBallD.floatiness + crystalBallD.originalY
+
     // Draw the ball.
     circle(crystalBallD.x, crystalBallD.y, crystalBallD.size);
     pop();
 }
 
+function drawTextD() {
+    if (drawFortuneD === true) {
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(18);
+        fill('white')
+        text("AH AH AH! Quit searching for your fortune and go make it!", 350, 650)
+        textAlign(CENTER, CENTER);
+        textStyle(BOLDITALIC);
+        textSize(18);
+        fill('white')
+        text("Live your life to the fullest - then you will be *TRULY* fortunate.", 350, 680)
+    }
+}
+
 function generateRandomNumbers() {
     let count = 0;
     while (count < 7) {
-        let randomNumber = Math.floor(random(0, 51)); // first generate random number
+        let randomNumber = Math.floor(random(1, 50)); // first generate random number
         if (randomList.includes(randomNumber) === false) { // check if random number is already in list
             randomList.push(randomNumber) // if not, add it to list
             count = count + 1 // incrementing count
