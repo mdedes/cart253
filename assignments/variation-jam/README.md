@@ -59,7 +59,7 @@ Shaking finger image: https://t3.ftcdn.net/jpg/01/08/98/84/360_F_108988422_Ydtdq
 
 Tire image: https://www.google.com/url?sa=i&url=https%3A%2F%2Fcanadacustomautoworks.com%2Fblog%2Fthe-hazards-of-cracked-tires%2F&psig=AOvVaw0XPj_E8AGnUCLL0W6Uvudd&ust=1733498019125000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIiH5cn1kIoDFQAAAAAdAAAAABAE and edited by me in Photoshop.
 
-https://www.google.com/url?sa=i&url=https%3A%2F%2Fleafculture.co.uk%2Fproducts%2Fcowboy-cactus&psig=AOvVaw3MWeUwecvfS9HGDARyc7hb&ust=1733499364847000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjry9n7kIoDFQAAAAAdAAAAABAE and edited by me in Photoshop.
+Cactus image: https://www.google.com/url?sa=i&url=https%3A%2F%2Fleafculture.co.uk%2Fproducts%2Fcowboy-cactus&psig=AOvVaw3MWeUwecvfS9HGDARyc7hb&ust=1733499364847000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjry9n7kIoDFQAAAAAdAAAAABAE and edited by me in Photoshop.
 
 Gnome image: https://www.google.com/url?sa=i&url=https%3A%2F%2Fshop.seerockcity.com%2Fproducts%2Frock-city-gnome-statue&psig=AOvVaw085Fq5_ThHi7qDA33agj3r&ust=1733533079324000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNiVhJL4kYoDFQAAAAAdAAAAABBo and edited by me in Photoshop.
 
