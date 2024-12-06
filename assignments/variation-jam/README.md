@@ -6,30 +6,31 @@ Mary Dedes
 
 ## Description
 
-WELCOME one and all to this INCREDIBLE, LIFE-CHANGING (or LIFE AFFIRMING?) compilation of fortune-telling experiences. 
+WELCOME one and all to this *INCREDIBLE*, *LIFE-CHANGING* (or *LIFE AFFIRMING?*) compilation of fortune-telling experiences. 
 To navigate this experience (and the experiences within it), simply follow the instructions below:
 
 -- When you are on the menu page, simply click on a floating crystal ball for a fortune-telling.
+  
+- If you reach 'FORTUNE APPARITIONS":
+  1 - Rub the ball with your hand to activate it. See it shake! 
+  2 - Click on the ball to reveal your fortune and the apparition! *wWWWoOoOooooOo*
+  3 - You will have refresh the page and re-access this experience to get a new fortune.
+ 
+- If you reach 'LUCK FORTUNE SLOT MACHINE':
+  1 - Simply click in the large center ball to start the slottin'.
+  2 - Let the Lucky Charms speak their spinny truth.
+  3 - Get a good idea of your luck state today!!
+ 
+- If you reach 'POTENTIAL LOTTO MAX FORTUNE NUMBER GENERATOR FORTUNE':
+  1 - Click in the lowest ball at the center to activate the Lotto Max number generator.
+  2 - Be amazed as your potential literal fortune *might* be found in these numbers (fortune-achieving results NOT guranteed).
 
-If you reach 'FORTUNE APPARITIONS": 
-1 - Rub the ball with your hand to activate it. See it shake! 
-2 - Click on the ball to reveal your fortune and the apparition! wWWWoOoOooooOo 
-3 - You will have refresh the page and re-access this experience to get a new fortune.
+- If you reach 'REALITY CHECK FORTUNE':
+  1 - Click inside the giant floating crystal ball.
+  2 - Prepare yourself for a life-altering revelation.
+  
+ And that's it! Enjoy the experience!!! You can pay in cash after you're done!!
 
-If you reach 'LUCK FORTUNE SLOT MACHINE': 
-1 - Simply click in the large center ball to start the slottin'. 
-2 - Let the Lucky Charms speak their spinny truth. 
-3 - Get a good idea of your luck state today!!
-
-If you reach 'POTENTIAL LOTTO MAX FORTUNE NUMBER GENERATOR FORTUNE': 
-1 - Click in the lowest ball at the center to activate the Lotto Max number generator. 
-2 - Be amazed as your potential literal fortune might be found in these numbers (fortune-achieving results NOT guranteed).
-
-If you reach 'REALITY CHECK FORTUNE': 
-1 - Click inside the giant floating crystal ball. 
-2 - Prepare yourself for a life-altering revelation.
-
-And that's it! Enjoy the experience!!! You can pay in cash after you're done!!
 
 ## Credits
 
